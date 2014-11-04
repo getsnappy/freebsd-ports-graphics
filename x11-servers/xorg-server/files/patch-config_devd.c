@@ -285,14 +285,14 @@
 +static void
 +device_removed(char *devname)
 +{
-+	char *value;
++	char *config_info;
 +
-+	if (asprintf(&value, "devd:%s", devname) == -1)
++	if (asprintf(&config_info, "devd:%s", devname) == -1)
 +		return;
 +
-+	remove_devices("devd", value);
++	remove_devices("devd", config_info);
 +
-+	free(value);
++	free(config_info);
 +}
 +
 +static void
