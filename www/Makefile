@@ -1454,6 +1454,7 @@
     SUBDIR += py-bleach
     SUBDIR += py-blogofile
     SUBDIR += py-bottle
+    SUBDIR += py-bottle-cork
     SUBDIR += py-cherrypy
     SUBDIR += py-cherrypy-old
     SUBDIR += py-clientform
@@ -1664,6 +1665,8 @@
     SUBDIR += py-scgi
     SUBDIR += py-scrapy
     SUBDIR += py-scriptaculous
+    SUBDIR += py-seafdav
+    SUBDIR += py-seafobj
     SUBDIR += py-selector
     SUBDIR += py-selenium
     SUBDIR += py-slimmer
@@ -1697,6 +1700,7 @@
     SUBDIR += py-wikitools
     SUBDIR += py-ws4py
     SUBDIR += py-wsgiauth
+    SUBDIR += py-wsgidav
     SUBDIR += py-zope.app.wsgi
     SUBDIR += pyblosxom
     SUBDIR += pydio
