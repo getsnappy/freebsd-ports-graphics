@@ -18,12 +18,10 @@ USES=		gettext:build
 
 OPTIONS_DEFINE=	TEXTURE
 
-# VDPAU support is disabled because we lack kernel support at this moment
-# 2014-10-28
-OPTIONS_DEFINE_i386=	GALLIUM
-OPTIONS_DEFAULT_i386=	GALLIUM
-OPTIONS_DEFINE_amd64=	GALLIUM
-OPTIONS_DEFAULT_amd64=	GALLIUM
+OPTIONS_DEFINE_i386=	GALLIUM VDPAU
+OPTIONS_DEFAULT_i386=	GALLIUM VDPAU
+OPTIONS_DEFINE_amd64=	GALLIUM VDPAU
+OPTIONS_DEFAULT_amd64=	GALLIUM VDPAU
 
 GALLIUM_DESC=	Gallium (llvm backed) dri drivers
 TEXTURE_DESC=	Enable texture-float support (patent encumbered)
@@ -62,15 +60,18 @@ DRIREVISION=	6
 PLIST=	${.CURDIR}/pkg-plist-old
 .endif
 
+DRI_LLVM_VER=	0
+
 .if ${PORT_OPTIONS:MGALLIUM}
 . if defined(WITH_NEW_MESA)
 # keep in sync with libopencl please
-BUILD_DEPENDS+=	llvm34>=0:${PORTSDIR}/devel/llvm34
-CONFIGURE_ENV+=	LLVM_CONFIG=${LOCALBASE}/bin/llvm-config34
+DRI_LLVM_VER=	34
 . else
-BUILD_DEPENDS+=	llvm33>=0:${PORTSDIR}/devel/llvm33
-CONFIGURE_ENV+=	LLVM_CONFIG=${LOCALBASE}/bin/llvm-config33
+DRI_LLVM_VER=	33
 . endif
+
+BUILD_DEPENDS+=	llvm${DRI_LLVM_VER}>=0:${PORTSDIR}/devel/llvm${DRI_LLVM_VER}
+CONFIGURE_ENV+=	LLVM_CONFIG=${LOCALBASE}/bin/llvm-config${DRI_LLVM_VER}
 
 CONFIGURE_ARGS+=--enable-gallium-llvm \
 		--enable-xvmc \
@@ -86,15 +87,18 @@ PLIST_SUB+=	GALLIUM="@comment "
 CONFIGURE_ARGS+=--enable-texture-float
 .endif
 
-# VDPAU needs llvm libraries at runtime.
-#.if ${PORT_OPTIONS:MVDPAU}
-#CONFIGURE_ARGS+=--enable-vdpau
-#LIB_DEPENDS+=	libvdpau.so:${PORTSDIR}/multimedia/libvdpau
-#PLIST_SUB+=	VDPAU=""
-#.else
+.if ${PORT_OPTIONS:MVDPAU}
+.if ${PORT_OPTIONS:MGALLIUM} == ""
+IGNORE=	VDPAU option required GALLIUM support to be enabled
+.endif
+CONFIGURE_ARGS+=--enable-vdpau
+LIB_DEPENDS+=	libvdpau.so:${PORTSDIR}/multimedia/libvdpau
+RUN_DEPENDS+=	llvm${DRI_LLVM_VER}:${PORTSDIR}/lang/llvm${DRI_LLVM_VER}
+PLIST_SUB+=	VDPAU=""
+.else
 CONFIGURE_ARGS+=--disable-vdpau
 PLIST_SUB+=	VDPAU="@comment "
-#.endif
+.endif
 
 .if ${ARCH} == powerpc || ${ARCH} == powerpc64
 DRI_DRIVERS=	RADEON SWRAST
