@@ -1,5 +1,5 @@
 Index: config/devd.c
-@@ -0,0 +1,542 @@
+@@ -0,0 +1,538 @@
 +/*
 + * Copyright (c) 2012 Baptiste Daroussin
 + * Copyright (c) 2013, 2014 Alex Kozlov
@@ -248,7 +248,7 @@ Index: config/devd.c
 +	attrs.device = strdup(path);
 +	options = input_option_new(options, "driver", hw_types[i].xdriver);
 +
-+	fd = open(path, O_RDONLY | O_NONBLOCK | O_EXCL);
++	fd = open(path, O_RDONLY);
 +	if (fd > 0) {
 +		close(fd);
 +		options = input_option_new(options, "device", xstrdup(path));
@@ -258,7 +258,8 @@ Index: config/devd.c
 +			LogMessage(X_ERROR, "config/devd: device %s already opened\n",
 +					 path);
 +
-+			/* Fail if cannot open device, it breaks AllowMouseOpenFail,
++			/*
++			 * Fail if cannot open device, it breaks AllowMouseOpenFail,
 +			 * but it should not matter when config/devd enabled
 +			 */
 +			/* options = input_option_new(options, "device", xstrdup(path)); */
@@ -498,19 +499,14 @@ Index: config/devd.c
 +	int i, j;
 +
 +
-+	/* Add fake keyboard and give up on keyboards management */
++	/*
++	 * Add fake keyboard and give up on keyboards management
++	 * if kbdmux is enabled
++	 */
 +	if ((is_kbdmux = is_kbdmux_enabled()) == true)
 +		device_added("kbdmux");
 +
 +	for (i = 0; hw_types[i].driver != NULL; i++) {
-+		/* Skip keyboard devices if kbdmux is enabled */
-+		if (is_kbdmux && hw_types[i].flag & ATTR_KEYBOARD) {
-+			LogMessage(X_INFO, "config/devd: kbdmux is enabled, "
-+					"ignoring device %s*\n",
-+					hw_types[i].driver);
-+			continue;
-+		}
-+
 +		/* First scan the sysctl to determine the hardware */
 +		for (j = 0; j < 16; j++) {
 +			if (sysctl_exists(&hw_types[i], j,
