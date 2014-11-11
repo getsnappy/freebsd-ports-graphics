@@ -1,6 +1,5 @@
---- config/devd.c.orig	2014-10-30 22:58:01.116847441 +0100
-+++ config/devd.c	2014-10-31 10:01:12.200208323 +0100
-@@ -0,0 +1,472 @@
+Index: config/devd.c
+@@ -0,0 +1,542 @@
 +/*
 + * Copyright (c) 2012 Baptiste Daroussin
 + * Copyright (c) 2013, 2014 Alex Kozlov
@@ -34,6 +33,7 @@
 +#endif
 +
 +#include <sys/types.h>
++#include <sys/kbio.h>
 +#include <sys/socket.h>
 +#include <sys/stat.h>
 +#include <sys/sysctl.h>
@@ -62,6 +62,8 @@
 +#define RECONNECT_DELAY		5 * 1000
 +
 +static int sock_devd;
++static bool is_console_kbd = false;
++static bool is_kbdmux = false;
 +OsTimerPtr rtimer;
 +
 +struct hw_type {
@@ -73,6 +75,7 @@
 +static struct hw_type hw_types[] = {
 +	{ "ukbd", ATTR_KEYBOARD, "kbd" },
 +	{ "atkbd", ATTR_KEYBOARD, "kbd" },
++	{ "kbdmux", ATTR_KEYBOARD, "kbd" },
 +	{ "sysmouse", ATTR_POINTER, "mouse" },
 +	{ "ums", ATTR_POINTER, "mouse" },
 +	{ "psm", ATTR_POINTER, "mouse" },
@@ -200,6 +203,13 @@
 +		return;
 +	}
 +
++	/* Skip keyboard devices if kbdmux is enabled */
++	if (is_kbdmux && is_console_kbd && hw_types[i].flag & ATTR_KEYBOARD) {
++		LogMessage(X_INFO, "config/devd: kbdmux is enabled, ignoring device %s\n",
++				devname);
++		return;
++	}
++
 +	snprintf(path, sizeof(path), "/dev/%s", devname);
 +
 +	options = input_option_new(NULL, "_source", "server/devd");
@@ -244,16 +254,36 @@
 +		options = input_option_new(options, "device", xstrdup(path));
 +	}
 +	else {
-+		/*
-+		 * Don't pass "device" option if the device is a keyboard and is
-+		 * already attached to the console (ie. open() fails).
-+		 * This would activate a special logic in xf86-input-keyboard.
-+		 */
 +		if (attrs.flags & ~ATTR_KEYBOARD) {
-+			options = input_option_new(options, "device", xstrdup(path));
++			LogMessage(X_ERROR, "config/devd: device %s already opened\n",
++					 path);
++
++			/* Fail if cannot open device, it breaks AllowMouseOpenFail,
++			 * but it should not matter when config/devd enabled
++			 */
++			/* options = input_option_new(options, "device", xstrdup(path)); */
++			goto unwind;
 +		}
-+		LogMessage(X_WARNING, "config/devd: device %s already opened\n",
-+				 path);
++
++		if (is_console_kbd) {
++			/*
++			 * There can be only one keyboard attached to console and
++			 * it is already added.
++			 */
++			LogMessage(X_WARNING, "config/devd: console keyboard is "
++					"already added, ignoring %s (%s)\n",
++					attrs.product, path);
++			goto unwind;
++		}
++		else
++			/*
++			 * Don't pass "device" option if the keyboard is already
++			 * attached to the console (ie. open() fails).
++			 * This would activate a special logic in xf86-input-keyboard.
++			 * Prevent any other attached to console keyboards being
++			 * processed. There can be only one such device.
++			 */
++			is_console_kbd = true;
 +	}
 +
 +	if (asprintf(&config_info, "devd:%s", devname) == -1) {
@@ -263,7 +293,7 @@
 +
 +	if (device_is_duplicate(config_info)) {
 +		LogMessage(X_WARNING, "config/devd: device %s (%s) already added. "
-+				"Ignoring\n", attrs.product, path);
++				"ignoring\n", attrs.product, path);
 +		goto unwind;
 +	}
 +
@@ -293,6 +323,32 @@
 +	remove_devices("devd", config_info);
 +
 +	free(config_info);
++}
++
++static bool is_kbdmux_enabled(void)
++{
++	/* Xorg uses /dev/ttyv0 as a console device */
++	/* const char device[]="/dev/console"; */
++	const char device[]="/dev/ttyv0";
++	keyboard_info_t info;
++	int fd;
++
++	fd = open(device, O_RDONLY);
++
++	if (fd < 0)
++		return false;
++
++	if (ioctl(fd, KDGKBINFO, &info) == -1) {
++		close(fd);
++		return false;
++	}
++
++	close(fd);
++
++	if (!strncmp(info.kb_name, "kbdmux", 6))
++		return true;
++
++	return false;
 +}
 +
 +static void
@@ -343,7 +399,7 @@
 +		return 0;
 +	}
 +
-+	/* try again after RECONNECT_DELAY */
++	/* Try again after RECONNECT_DELAY */
 +	return RECONNECT_DELAY;
 +}
 +
@@ -395,7 +451,7 @@
 +	else
 +		free(buf);
 +
-+	/* number of bytes in the line, not counting the line break */
++	/* Number of bytes in the line, not counting the line break */
 +	return sz;
 +}
 +
@@ -441,8 +497,21 @@
 +	char devicename[1024];
 +	int i, j;
 +
++
++	/* Add fake keyboard and give up on keyboards management */
++	if ((is_kbdmux = is_kbdmux_enabled()) == true)
++		device_added("kbdmux");
++
 +	for (i = 0; hw_types[i].driver != NULL; i++) {
-+		/* first scan the sysctl to determine the hardware */
++		/* Skip keyboard devices if kbdmux is enabled */
++		if (is_kbdmux && hw_types[i].flag & ATTR_KEYBOARD) {
++			LogMessage(X_INFO, "config/devd: kbdmux is enabled, "
++					"ignoring device %s*\n",
++					hw_types[i].driver);
++			continue;
++		}
++
++		/* First scan the sysctl to determine the hardware */
 +		for (j = 0; j < 16; j++) {
 +			if (sysctl_exists(&hw_types[i], j,
 +					devicename, sizeof(devicename)) != 0)
