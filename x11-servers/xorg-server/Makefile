@@ -34,9 +34,6 @@ OPTIONS_DEFAULT=AIGLX SUID DEVD
 
 OPTIONS_EXCLUDE_sparc64=	HAL
 
-# We handle Xorg setuid in the plist. This allows to build xorg-server as a user.
-CONFIGURE_ARGS+=--enable-install-setuid=no
-
 .include <bsd.port.options.mk>
 
 USES=		gmake libtool perl5 tar:bzip2
@@ -56,6 +53,9 @@ CONFIGURE_ARGS?=--disable-dmx --disable-xvfb --disable-xnest \
 		--localstatedir=/var --without-dtrace --disable-xephyr \
 		--enable-record=yes
 INSTALL_TARGET=	install-strip
+
+# We handle Xorg setuid in the plist. This allows to build xorg-server as a user.
+CONFIGURE_ARGS+=--disable-install-setuid
 
 .if ${SLAVE_PORT} == "no"
 SUB_FILES=	pkg-install pkg-deinstall
