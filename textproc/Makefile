@@ -362,7 +362,6 @@
     SUBDIR += liblrdf
     SUBDIR += libmrss
     SUBDIR += libmrss-php
-    SUBDIR += libmwaw
     SUBDIR += libmwaw03
     SUBDIR += libnxml
     SUBDIR += libodfgen
@@ -515,6 +514,7 @@
     SUBDIR += p5-Geo-Parse-OSM
     SUBDIR += p5-Getopt-Lucid
     SUBDIR += p5-Google-Data-JSON
+    SUBDIR += p5-Groonga-API
     SUBDIR += p5-HTML-CTPP2
     SUBDIR += p5-HTML-Copy
     SUBDIR += p5-HTML-Entities-ImodePictogram

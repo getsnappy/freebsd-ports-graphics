@@ -144,6 +144,7 @@
     SUBDIR += bpython
     SUBDIR += bsdbuild
     SUBDIR += bsdcflow
+    SUBDIR += bsdowl
     SUBDIR += bufferpool
     SUBDIR += bug-buddy
     SUBDIR += bugzilla44
@@ -539,6 +540,7 @@
     SUBDIR += gio-sharp
     SUBDIR += git
     SUBDIR += git-bzr-ng
+    SUBDIR += git-extras
     SUBDIR += git-merge-changelog
     SUBDIR += git-modes
     SUBDIR += git-review
@@ -645,6 +647,7 @@
     SUBDIR += hp48xgcc
     SUBDIR += hs-BNFC
     SUBDIR += hs-Boolean
+    SUBDIR += hs-BoundedChan
     SUBDIR += hs-ConfigFile
     SUBDIR += hs-DrIFT
     SUBDIR += hs-Glob
@@ -693,6 +696,7 @@
     SUBDIR += hs-bsd-sysctl
     SUBDIR += hs-byteable
     SUBDIR += hs-byteorder
+    SUBDIR += hs-bytestring-lexing
     SUBDIR += hs-bytestring-nums
     SUBDIR += hs-bytestring-show
     SUBDIR += hs-c2hs
@@ -1054,6 +1058,7 @@
     SUBDIR += libkolab
     SUBDIR += liblangtag
     SUBDIR += liblas
+    SUBDIR += liblas12
     SUBDIR += liblcfg
     SUBDIR += libleaftag
     SUBDIR += liblnk
@@ -1126,6 +1131,7 @@
     SUBDIR += librevisa-vxi
     SUBDIR += libruin
     SUBDIR += libs11n
+    SUBDIR += libsearpc
     SUBDIR += libserialport
     SUBDIR += libserver
     SUBDIR += libshbuf
@@ -2308,6 +2314,7 @@
     SUBDIR += p5-Log-Dispatch-Screen-Color
     SUBDIR += p5-Log-Dispatch-Scribe
     SUBDIR += p5-Log-Dispatchouli
+    SUBDIR += p5-Log-Dump
     SUBDIR += p5-Log-Handler
     SUBDIR += p5-Log-Log4perl
     SUBDIR += p5-Log-Log4perl-Appender-RabbitMQ
@@ -2570,7 +2577,9 @@
     SUBDIR += p5-Package-Stash-XS
     SUBDIR += p5-Package-Variant
     SUBDIR += p5-PadWalker
+    SUBDIR += p5-Parallel-Async
     SUBDIR += p5-Parallel-ForkManager
+    SUBDIR += p5-Parallel-Fork-BossWorker
     SUBDIR += p5-Parallel-Iterator
     SUBDIR += p5-Parallel-Prefork
     SUBDIR += p5-Parallel-Scoreboard
@@ -2602,6 +2611,7 @@
     SUBDIR += p5-Path-Class-File-Lockable
     SUBDIR += p5-Path-Dispatcher
     SUBDIR += p5-Path-Dispatcher-Declarative
+    SUBDIR += p5-Path-Extended
     SUBDIR += p5-Path-FindDev
     SUBDIR += p5-Path-IsDev
     SUBDIR += p5-Path-Iterator-Rule
@@ -2840,6 +2850,7 @@
     SUBDIR += p5-Term-Query
     SUBDIR += p5-Term-RawInput
     SUBDIR += p5-Term-ReadKey
+    SUBDIR += p5-Term-ReadLine
     SUBDIR += p5-Term-ReadLine-Perl
     SUBDIR += p5-Term-ReadLine-Zoid
     SUBDIR += p5-Term-ReadPassword
@@ -3602,6 +3613,7 @@
     SUBDIR += py-anonfunc
     SUBDIR += py-anyjson
     SUBDIR += py-apipkg
+    SUBDIR += py-appdirs
     SUBDIR += py-application
     SUBDIR += py-archetypes.querywidget
     SUBDIR += py-archetypes.referencebrowserwidget
@@ -3913,6 +3925,7 @@
     SUBDIR += py-robotframework-pabot
     SUBDIR += py-robotframework-ride
     SUBDIR += py-robotframework-selenium2library
+    SUBDIR += py-robotremoteserver
     SUBDIR += py-rope
     SUBDIR += py-rose
     SUBDIR += py-roxlib
@@ -3992,6 +4005,7 @@
     SUBDIR += py-usb
     SUBDIR += py-user_agents
     SUBDIR += py-utils
+    SUBDIR += py-validictory
     SUBDIR += py-venusian
     SUBDIR += py-versiontools
     SUBDIR += py-virtualenv
@@ -4169,7 +4183,7 @@
     SUBDIR += qt5-linguisttools
     SUBDIR += qt5-qdbus
     SUBDIR += qt5-qdbusviewer
-    SUBDIR += qt5-qmldevtools
+    SUBDIR += qt5-qdoc
     SUBDIR += qt5-script
     SUBDIR += qt5-scripttools
     SUBDIR += qt5-testlib

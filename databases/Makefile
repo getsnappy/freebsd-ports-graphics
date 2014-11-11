@@ -89,6 +89,7 @@
     SUBDIR += hbase
     SUBDIR += hiredis
     SUBDIR += hs-esqueleto
+    SUBDIR += hs-hedis
     SUBDIR += hs-mysql
     SUBDIR += hs-persistent
     SUBDIR += hs-persistent-sqlite
@@ -163,6 +164,8 @@
     SUBDIR += mariadb-client
     SUBDIR += mariadb-scripts
     SUBDIR += mariadb-server
+    SUBDIR += mariadb100-client
+    SUBDIR += mariadb100-server
     SUBDIR += mariadb55-client
     SUBDIR += mariadb55-server
     SUBDIR += mdbtools
