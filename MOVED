@@ -7181,3 +7181,4 @@ science/elmer-eio|cad/elmerfem|2014-11-07|Has expired: Obsoleted by cad/elmerfem
 science/elmer-matc|cad/elmerfem|2014-11-07|Has expired: Obsoleted by cad/elmerfem
 science/elmer-meshgen2d|cad/elmerfem|2014-11-07|Has expired: Obsoleted by cad/elmerfem
 science/elmergrid|cad/elmerfem|2014-11-07|Has expired: Obsoleted by cad/elmerfem
+x11-drivers/xf86-input-egalax||2014-11-12|Removed: Depends on removed xorg-server 1.7.7
