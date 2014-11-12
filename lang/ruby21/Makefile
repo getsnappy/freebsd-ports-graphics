@@ -62,7 +62,7 @@ CAPIDOCS_BUILD_DEPENDS=	doxygen>0:${PORTSDIR}/devel/doxygen \
 CAPIDOCS_CONFIGURE_OFF=	--disable-install-capi
 RDOC_CONFIGURE_OFF=	--disable-install-rdoc
 
-USES=		execinfo cpe tar:bzip2
+USES=		execinfo cpe tar:xz
 
 CPE_VENDOR=	ruby-lang
 CPE_VERSION=	${RUBY_RELVERSION}
@@ -85,7 +85,7 @@ CPPFLAGS+=	-I${LOCALBASE}/include
 LIBS+=		-L${LOCALBASE}/lib ${PTHREAD_LIBS}
 
 .if ${OPSYS} == "FreeBSD"
-.if (${ARCH} == "i386" && ${OSVERSION} > 1010000) || (${ARCH} == "amd64" && ${OSVERSION} > 903000)
+.if exists(/usr/sbin/dtrace) && (${OSVERSION} > 1100032)
 CONFIGURE_ARGS+=	--enable-dtrace
 .else
 CONFIGURE_ARGS+=	--disable-dtrace
