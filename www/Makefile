@@ -517,6 +517,7 @@
     SUBDIR += mongrel2
     SUBDIR += moodle26
     SUBDIR += moodle27
+    SUBDIR += moodle28
     SUBDIR += mozplugger
     SUBDIR += multisort
     SUBDIR += multiwatch
@@ -1693,6 +1694,7 @@
     SUBDIR += py-webhelpers
     SUBDIR += py-webkitgtk
     SUBDIR += py-webob
+    SUBDIR += py-websocket-client
     SUBDIR += py-webunit
     SUBDIR += py-webware
     SUBDIR += py-webware-component

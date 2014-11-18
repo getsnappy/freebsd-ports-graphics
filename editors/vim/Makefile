@@ -58,7 +58,7 @@ INSTALL_WRKSRC=	${WRKDIR}/${VIM_VER}/src
 WRKSRC=		${WRKDIR}/${VIM_VER}
 
 PLIST_SUB=	VIM_VER=${VIM_VER}
-PORTDATA=	*
+PORTDATA=	${VIM_VER}
 
 VIM_VER=	${PORTNAME}${PORTVERSION:R:S/.//g}
 
@@ -191,7 +191,8 @@ post-install:
 	${INSTALL_DATA} ${FILESDIR}/vietnamese_viscii.vim ${STAGEDIR}${DATADIR}/${VIM_VER}/keymap/
 	${TOUCH} ${STAGEDIR}${DATADIR}/${VIM_VER}/lang/.keepme
 .if ${PORT_OPTIONS:MDEFAULT_VIMRC}
-	${INSTALL_DATA} ${FILESDIR}/vimrc ${STAGEDIR}${DEFAULT_VIMRC_LOCATION}/vimrc
+	${INSTALL_DATA} ${WRKSRC}/runtime/vimrc_example.vim ${STAGEDIR}${DEFAULT_VIMRC_LOCATION}/vimrc.sample
+	${INSTALL_DATA} ${WRKSRC}/runtime/gvimrc_example.vim ${STAGEDIR}${DEFAULT_VIMRC_LOCATION}/gvimrc.sample
 .endif
 
 .include <bsd.port.post.mk>
