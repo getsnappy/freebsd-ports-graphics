@@ -141,6 +141,7 @@
     SUBDIR += fwlogwatch
     SUBDIR += gag
     SUBDIR += gcipher
+    SUBDIR += gcr
     SUBDIR += gnome-gpg
     SUBDIR += gnome-keyring
     SUBDIR += gnome-keyring-sharp
@@ -149,6 +150,7 @@
     SUBDIR += gnomint
     SUBDIR += gnupg
     SUBDIR += gnupg1
+    SUBDIR += gnupg20
     SUBDIR += gnutls
     SUBDIR += go.crypto
     SUBDIR += goptlib
@@ -906,7 +908,6 @@
     SUBDIR += scanssh
     SUBDIR += scrypt
     SUBDIR += seahorse
-    SUBDIR += seahorse-plugins
     SUBDIR += seccure
     SUBDIR += secpanel
     SUBDIR += sectok
