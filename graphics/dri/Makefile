@@ -88,7 +88,7 @@ CONFIGURE_ARGS+=--enable-texture-float
 
 .if ${PORT_OPTIONS:MVDPAU}
 .if ${PORT_OPTIONS:MGALLIUM} == ""
-IGNORE=	VDPAU option required GALLIUM support to be enabled
+IGNORE=	VDPAU option requires GALLIUM support to be enabled
 .endif
 CONFIGURE_ARGS+=--enable-vdpau
 LIB_DEPENDS+=	libvdpau.so:${PORTSDIR}/multimedia/libvdpau
