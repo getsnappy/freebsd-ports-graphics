@@ -17,9 +17,9 @@ USE_XORG=	glproto x11 xext xxf86vm xdamage xfixes dri2proto \
 
 OPTIONS_DEFINE=	TEXTURE
 
-OPTIONS_DEFINE_i386=	GALLIUM VDPAU
+OPTIONS_DEFINE_i386=	GALLIUM
 OPTIONS_DEFAULT_i386=	GALLIUM
-OPTIONS_DEFINE_amd64=	GALLIUM VDPAU
+OPTIONS_DEFINE_amd64=	GALLIUM
 OPTIONS_DEFAULT_amd64=	GALLIUM
 
 GALLIUM_DESC=	Gallium (llvm backed) dri drivers
@@ -86,7 +86,7 @@ PLIST_SUB+=	GALLIUM="@comment "
 CONFIGURE_ARGS+=--enable-texture-float
 .endif
 
-.if ${PORT_OPTIONS:MVDPAU}
+.if 0 #${PORT_OPTIONS:MVDPAU}
 .if ${PORT_OPTIONS:MGALLIUM} == ""
 IGNORE=	VDPAU option requires GALLIUM support to be enabled
 .endif
