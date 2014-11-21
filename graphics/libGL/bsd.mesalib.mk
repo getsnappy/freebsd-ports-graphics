@@ -28,15 +28,15 @@ MESAVERSION=	${MESABASEVERSION}${MESASUBVERSION:C/^(.)/.\1/}
 MESADISTVERSION=${MESABASEVERSION}${MESASUBVERSION:C/^(.)/-\1/}
 
 .if defined(WITH_NEW_MESA)
-MESABASEVERSION=	10.3.3
+MESABASEVERSION=	10.4.0
 # if there is a subversion, don't include the '-' between 7.11-rc2.
-MESASUBVERSION=	
+MESASUBVERSION=		rc1
 
-.if ${MESASUBVERSION} == "" && ${MESABASEVERSION:E} != 0
+#.if ${MESASUBVERSION} == "" && ${MESABASEVERSION:E} != 0
 MASTER_SITES=	ftp://ftp.freedesktop.org/pub/mesa/${MESABASEVERSION}/
-.else
-MASTER_SITES=	ftp://ftp.freedesktop.org/pub/mesa/${MESABASEVERSION:R}/
-.endif
+#.else
+#MASTER_SITES=	ftp://ftp.freedesktop.org/pub/mesa/${MESABASEVERSION:R}/
+#.endif
 PLIST_SUB+=	OLD="@comment " NEW=""
 
 # work around libarchive bug?
