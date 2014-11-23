@@ -17,6 +17,7 @@ GH_COMMIT=      bdeb3bf
 
 GNU_CONFIGURE=  yes
 USES=		libtool pkgconfig
-USE_XORG=	xorg-server xproto glproto inputproto randrproto renderproto videoproto xf86driproto
+USE_XORG=	xorg-server xproto glproto inputproto randrproto \
+		renderproto resourceproto videoproto xf86driproto
 
 .include <bsd.port.mk>
