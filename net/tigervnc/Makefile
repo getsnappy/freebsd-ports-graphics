@@ -109,20 +109,12 @@ CONFIGURE_ARGS+=	\
 		--with-xkb-path=${LOCALBASE}/share/X11/xkb \
 		--with-xkb-bin-directory=${LOCALBASE}/bin \
 		--with-serverconfig-path=${LOCALBASE}/lib/X11 \
-		--disable-selective-werror
-.ifdef WITH_NEW_XORG
-CONFIGURE_ARGS+=	--with-fontrootdir=${LOCALBASE}/share/fonts
-.else
-CONFIGURE_ARGS+=	--with-fontdir=${LOCALBASE}/share/fonts
-.endif
+		--disable-selective-werror \
+		--with-fontrootdir=${LOCALBASE}/share/fonts
 
 .include <bsd.port.pre.mk>
 
-.ifdef WITH_NEW_XORG
-TIGERVNC_XORG_PATCH_VER=	112
-.else
-TIGERVNC_XORG_PATCH_VER=	17
-.endif
+TIGERVNC_XORG_PATCH_VER=	114
 
 # import from x11-server/xorg-server/Makefile
 .ifdef WITH_OPENSSL_BASE
