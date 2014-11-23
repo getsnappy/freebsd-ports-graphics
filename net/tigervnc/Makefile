@@ -100,7 +100,7 @@ MAKE_ARGS+=	TIGERVNC_SRCDIR=${WRKSRC}
 CONFIGURE_ARGS+=	\
 		--prefix=${PREFIX} --mandir=${PREFIX}/man/ \
 		--docdir=${PREFIX}/share/doc/${PORTNAME}/ --with-pic --without-dtrace \
-		--disable-static --disable-dri \
+		--disable-static --disable-dri --disable-unit-tests \
 		--disable-xinerama --disable-xvfb --disable-xnest --disable-xorg \
 		--disable-dmx --disable-xwin --disable-xephyr --disable-kdrive \
 		--disable-config-dbus --disable-config-hal \
