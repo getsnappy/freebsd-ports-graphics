@@ -46,7 +46,6 @@ VIDEO_DRIVERS=		ati \
 			i740 \
 			mga \
 			neomagic \
-			newport \
 			rendition \
 			s3 \
 			s3virge \
