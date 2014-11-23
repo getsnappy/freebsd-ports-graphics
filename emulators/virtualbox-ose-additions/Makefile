@@ -27,7 +27,8 @@ UNIQUENAME=	${PORTNAME}${PKGNAMESUFFIX}
 PATCHDIR=	${.CURDIR}/../${PORTNAME}/files
 WRKSRC=		${WRKDIR}/VirtualBox-${PORTVERSION}
 USE_RC_SUBR=	vboxguest vboxservice
-USES=		compiler:features cpe iconv kmod python:build tar:bzip2
+USES=		compiler:features cpe iconv kmod pkgconfig python:build \
+		tar:bzip2
 ONLY_FOR_ARCHS=	i386 amd64
 MAKE_JOBS_UNSAFE=	yes
 
@@ -100,6 +101,7 @@ KMK_ARCH=	freebsd.x86
 KMK_ARCH=	freebsd.${ARCH}
 .endif
 
+XSERVER_VER!=	pkgconf --modversion xorg-server
 XSERVER_ABI:=	${XSERVER_VER:S/.//:R}
 
 .include <bsd.port.pre.mk>

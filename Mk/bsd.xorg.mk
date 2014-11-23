@@ -142,10 +142,6 @@ USE_XORG+=	pciaccess xextproto videoproto fontsproto dri2proto fontutil:build
 
 .endif
 
-.if exists(${LOCALBASE}/bin/X)
-XSERVER_VER!=	pkgconf --modversion xorg-server
-.endif
-
 .if defined(_POSTMKINCLUDED) && !defined(Xorg_Post_Include)
 
 Xorg_Post_Include=		bsd.xorg.mk
