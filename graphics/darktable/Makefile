@@ -99,25 +99,45 @@ WEBP_CMAKE_OFF=		-DUSE_WEBP:BOOL=OFF
 
 .include <bsd.port.pre.mk>
 
-# -------------------------------------------------------------------
-# USE_GCC must be late so the compiler feature checks work to detect
-# that the base C++ standard library switched to libc++:
-USE_GCC=	yes
+# # -------------------------------------------------------------------
+# # USE_GCC must be late so the compiler feature checks work to detect
+# # that the base C++ standard library switched to libc++:
+# USE_GCC=	yes
+#
+# .if ${COMPILER_FEATURES:Mlibc++}
+# LDFLAGS+=	-L/usr/local/lib/c++
+# CXXFLAGS+=	-nostdinc++ -isystem /usr/local/include/c++/v1
+# CFLAGS+=	-isystem /usr/local/include/c++/v1
+# BUILD_DEPENDS+=	${LOCALBASE}/lib/c++/libstdc++.so:${PORTSDIR}/devel/libc++
+# .endif
+#
+# .if ${PORT_OPTIONS:MOPENMP}
+# #CMAKE_ARGS+=	-DUSE_OPENMP:BOOL=ON
+# CMAKE_ARGS+=	-DUSE_OPENMP:BOOL=OFF
+# .else
+# CMAKE_ARGS+=	-DUSE_OPENMP:BOOL=OFF
+# .endif
+# # -------------------------------------------------------------------
 
-.if ${COMPILER_FEATURES:Mlibc++}
-LDFLAGS+=	-L/usr/local/lib/c++
-CXXFLAGS+=	-nostdinc++ -isystem /usr/local/include/c++/v1
-CFLAGS+=	-isystem /usr/local/include/c++/v1
-BUILD_DEPENDS+=	${LOCALBASE}/lib/c++/libstdc++.so:${PORTSDIR}/devel/libc++
-.endif
+V=48
+_GCC_PORT_DEPENDS=gcc${V}
+_GCC_PORT=gcc
+BUILD_DEPENDS+=	${_GCC_PORT_DEPENDS}:${PORTSDIR}/lang/${_GCC_PORT}
+RUN_DEPENDS+=	${_GCC_PORT_DEPENDS}:${PORTSDIR}/lang/${_GCC_PORT}
+USE_BINUTILS=	yes
+
+CC:=			gcc${V}
+CPP:=			cpp${V}
+_GCC_RUNTIME:=		${LOCALBASE}/lib/gcc${V}
+CFLAGS+=		-Wl,-rpath=${_GCC_RUNTIME}
+LDFLAGS+=		-Wl,-rpath=${_GCC_RUNTIME} -L${_GCC_RUNTIME}
 
 .if ${PORT_OPTIONS:MOPENMP}
-#CMAKE_ARGS+=	-DUSE_OPENMP:BOOL=ON
-CMAKE_ARGS+=	-DUSE_OPENMP:BOOL=OFF
+CMAKE_ARGS+=	-DUSE_OPENMP:BOOL=ON
 .else
 CMAKE_ARGS+=	-DUSE_OPENMP:BOOL=OFF
 .endif
-# -------------------------------------------------------------------
+# # -------------------------------------------------------------------
 
 .if defined(WITH_DEBUG)
 CMAKE_BUILD_TYPE=	RelWithDebInfo
