@@ -16,6 +16,7 @@ USE_XORG=	glproto x11 xext xxf86vm xdamage xfixes dri2proto \
 		presentproto xvmc xshmfence
 
 OPTIONS_DEFINE=	TEXTURE
+OPTIONS_DEFAULT=TEXTURE
 
 OPTIONS_DEFINE_i386=	GALLIUM
 OPTIONS_DEFAULT_i386=	GALLIUM
