@@ -70,6 +70,7 @@ DRI_LLVM_VER=	33
 . endif
 
 BUILD_DEPENDS+=	llvm${DRI_LLVM_VER}>=0:${PORTSDIR}/devel/llvm${DRI_LLVM_VER}
+RUN_DEPENDS+=	llvm${DRI_LLVM_VER}>=0:${PORTSDIR}/devel/llvm${DRI_LLVM_VER}
 CONFIGURE_ENV+=	LLVM_CONFIG=${LOCALBASE}/bin/llvm-config${DRI_LLVM_VER}
 
 CONFIGURE_ARGS+=--enable-gallium-llvm \
@@ -92,7 +93,6 @@ IGNORE=	VDPAU option requires GALLIUM support to be enabled
 .endif
 CONFIGURE_ARGS+=--enable-vdpau
 LIB_DEPENDS+=	libvdpau.so:${PORTSDIR}/multimedia/libvdpau
-RUN_DEPENDS+=	llvm${DRI_LLVM_VER}:${PORTSDIR}/devel/llvm${DRI_LLVM_VER}
 PLIST_SUB+=	VDPAU=""
 .else
 CONFIGURE_ARGS+=--disable-vdpau
