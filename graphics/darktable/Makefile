@@ -20,7 +20,8 @@ LIB_DEPENDS=	libexiv2.so:${PORTSDIR}/graphics/exiv2 \
 ONLY_FOR_ARCHS=	i386 amd64
 ONLY_FOR_ARCHS_REASON=	uses SSE extensions
 
-USES=		cmake:outsource desktop-file-utils ninja pkgconfig tar:xz
+USES=		cmake:outsource compiler:features desktop-file-utils	\
+		ninja pkgconfig tar:xz
 USE_GNOME=	librsvg2
 USE_SQLITE=	yes
 USE_LDCONFIG=	${PREFIX}/lib/${PORTNAME}
@@ -28,8 +29,8 @@ INSTALLS_ICONS=	yes
 LDFLAGS+=	-L${LOCALBASE}/lib -lintl
 
 OPTIONS_DEFINE=	COLORD DOCS FB_PICASA FLICKR GEO GNOMEKEYRING GPHOTO	\
-		GRAPHMAGICK LUA NLS OPENEXR OPENJPEG RAWSPEED SLIDESHOW	\
-		SQUISH WEBP
+		GRAPHMAGICK LUA NLS OPENEXR OPENJPEG OPENMP RAWSPEED	\
+		SLIDESHOW SQUISH WEBP
 
 GEO_DESC=	Support geotagging
 FB_PICASA_DESC=	Support export to Facebook and Picasa
@@ -38,7 +39,7 @@ RAWSPEED_DESC=	Compile with rawspeed backend
 SLIDESHOW_DESC=	Build OpenGL/SDL slideshow viewer
 
 OPTIONS_DEFAULT=COLORD FB_PICASA FLICKR GEO GPHOTO LUA NLS OPENEXR	\
-		OPENJPEG RAWSPEED SLIDESHOW SQUISH WEBP
+		OPENJPEG OPENMP RAWSPEED SLIDESHOW SQUISH WEBP
 OPTIONS_SUB=	yes
 
 CMAKE_ARGS+=	-DBINARY_PACKAGE_BUILD=1
@@ -96,14 +97,30 @@ SQUISH_CMAKE_OFF=	-DUSE_SQUISH:BOOL=OFF
 WEBP_LIB_DEPENDS=	libwebp.so:${PORTSDIR}/graphics/webp
 WEBP_CMAKE_OFF=		-DUSE_WEBP:BOOL=OFF
 
-.include <bsd.port.options.mk>
+.include <bsd.port.pre.mk>
 
-.if ${OSVERSION} < 1000000
+# -------------------------------------------------------------------
+# USE_GCC must be late so the compiler feature checks work to detect
+# that the base C++ standard library switched to libc++:
 USE_GCC=	yes
+
+.if ${COMPILER_FEATURES:Mlibc++}
+LDFLAGS+=	-L/usr/local/lib/c++
+CXXFLAGS+=	-nostdinc++ -isystem /usr/local/include/c++/v1
+CFLAGS+=	-isystem /usr/local/include/c++/v1
+BUILD_DEPENDS+=	${LOCALBASE}/lib/c++/libstdc++.so:${PORTSDIR}/devel/libc++
 .endif
 
+.if ${PORT_OPTIONS:MOPENMP}
+#CMAKE_ARGS+=	-DUSE_OPENMP:BOOL=ON
+CMAKE_ARGS+=	-DUSE_OPENMP:BOOL=OFF
+.else
+CMAKE_ARGS+=	-DUSE_OPENMP:BOOL=OFF
+.endif
+# -------------------------------------------------------------------
+
 .if defined(WITH_DEBUG)
-CMAKE_BUILD_TYPE?=	RelWithDebInfo
+CMAKE_BUILD_TYPE=	RelWithDebInfo
 STRIP=
 .endif
 
@@ -117,4 +134,4 @@ post-install:
 	${RMDIR} ${STAGEDIR}${DOCSDIR}
 .endif
 
-.include <bsd.port.mk>
+.include <bsd.port.post.mk>
