@@ -3,7 +3,7 @@
 
 PORTNAME=	wzdftpd
 PORTVERSION=	0.8.3
-PORTREVISION=	2
+PORTREVISION=	3
 CATEGORIES=	ftp ipv6
 MASTER_SITES=	SF/${PORTNAME}/${PORTNAME}-sources/${PORTNAME}-${PORTVERSION:R}
 
@@ -57,7 +57,7 @@ MYSQL_USE=		MYSQL=yes
 
 PGSQL_CONFIGURE_ON=	--with-pgsql=${LOCALBASE}
 PGSQL_CONFIGURE_OFF=	--disable-pgsql
-PGSQL_USE=		PGSQL=yes
+PGSQL_USES=		pgsql
 
 SQLITE_CONFIGURE_ENABLE=	sqlite3
 SQLITE_USE=			SQLITE=3
@@ -104,10 +104,6 @@ post-patch:
 		 /gcry_control/d' \
 
 post-install:
-.if ${PORT_OPTIONS:MPERL}
-	@${REINPLACE_CMD} -i '' -e 's|${STAGEDIR}||' \
-		${STAGEDIR}${SITE_PERL}/${PERL_ARCH}/auto/wzdftpd/.packlist
-.endif
 	(cd ${WRKSRC} && ${INSTALL_DATA} *.pc ${STAGEDIR}${PREFIX}/libdata/pkgconfig )
 	@${MKDIR} ${STAGEDIR}${DOCSDIR}
 .for i in AUTHORS ChangeLog NEWS Permissions.ReadMeFirst README \
