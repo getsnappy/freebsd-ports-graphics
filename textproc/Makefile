@@ -118,6 +118,7 @@
     SUBDIR += docbook-xsl
     SUBDIR += docbook-xsl-ns
     SUBDIR += docbook2X
+    SUBDIR += docbook2mdoc
     SUBDIR += docbook2odf
     SUBDIR += docbookide.el
     SUBDIR += docdiff
@@ -1141,6 +1142,7 @@
     SUBDIR += plover
     SUBDIR += po4a
     SUBDIR += pocketreader
+    SUBDIR += pod2mdoc
     SUBDIR += popup
     SUBDIR += popup-stacks
     SUBDIR += ppower4
@@ -1216,6 +1218,7 @@
     SUBDIR += py-stripogram
     SUBDIR += py-syck
     SUBDIR += py-texttable
+    SUBDIR += py-tinycss
     SUBDIR += py-trans
     SUBDIR += py-transifex-client
     SUBDIR += py-translationstring
@@ -1320,6 +1323,7 @@
     SUBDIR += rubygem-fast_xs
     SUBDIR += rubygem-fast_xs073
     SUBDIR += rubygem-ferret
+    SUBDIR += rubygem-fog-xml
     SUBDIR += rubygem-gemoji
     SUBDIR += rubygem-gherkin
     SUBDIR += rubygem-github-linguist
