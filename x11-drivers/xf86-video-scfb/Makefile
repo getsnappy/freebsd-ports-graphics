@@ -15,11 +15,9 @@ GH_PROJECT=     ${PORTNAME}
 GH_TAGNAME=     bdeb3bf
 GH_COMMIT=      bdeb3bf
 
-GNU_CONFIGURE=  yes
-USES=		libtool pkgconfig
-USE_XORG=	glproto inputproto kbproto randrproto renderproto \
-		resourceproto scrnsaverproto videoproto xextproto \
-		xf86bigfontproto xf86driproto xproto
+XORG_CAT=	driver
+USE_TGZ=	yes
+USE_XORG=
 INSTALL_TARGET=	install-strip
 
 .include <bsd.port.mk>
