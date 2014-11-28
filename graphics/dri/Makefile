@@ -65,7 +65,7 @@ DRI_LLVM_VER=	0
 .if ${PORT_OPTIONS:MGALLIUM}
 . if defined(WITH_NEW_MESA)
 # keep in sync with libopencl please
-DRI_LLVM_VER=	34
+DRI_LLVM_VER=	35
 . else
 DRI_LLVM_VER=	33
 . endif
