@@ -3,7 +3,7 @@
 
 PORTNAME=	perl
 PORTVERSION=	${PERL_VERSION}
-PORTREVISION=	7
+PORTREVISION=	9
 CATEGORIES=	lang devel perl5
 MASTER_SITES=	CPAN \
 		${MASTER_SITE_LOCAL:S/$/:local/} \
@@ -29,7 +29,7 @@ OPTIONS_DEFINE=	DEBUG GDBM PERL_64BITINT PTHREAD \
 # it seems perl malloc has problems with threaded perl on FreeBSD
 OPTIONS_RADIO=	EXCLUSIVE
 OPTIONS_RADIO_EXCLUSIVE=	THREADS PERL_MALLOC
-OPTIONS_DEFAULT=	PERL_64BITINT THREADS PTHREAD USE_PERL
+OPTIONS_DEFAULT=	PERL_64BITINT THREADS PTHREAD USE_PERL MULTIPLICITY
 
 EXCLUSIVE_DESC=	Exclusive OPTIONS
 GDBM_DESC=	GDBM_File extension
@@ -50,6 +50,7 @@ GDBM_CONFIGURE_OFF=	-Ui_gdbm
 GDBM_LIB_DEPENDS=	libgdbm.so:${PORTSDIR}/databases/gdbm
 PERL_64BITINT_CONFIGURE_ON=	-Duse64bitint
 MULTIPLICITY_CONFIGURE_ON=	-Dusemultiplicity=y
+MULTIPLICITY_CONFIGURE_OFF=	-Dusemultiplicity=n
 SITECUSTOMIZE_CONFIGURE_ON=	-Dusesitecustomize
 THREADS_CONFIGURE_ON=	-Dusethreads=y
 THREADS_CONFIGURE_OFF=	-Dusethreads=n
@@ -205,7 +206,7 @@ post-install:
 	${MKDIR} ${STAGEDIR}${SITE_ARCH}/sys
 	# h2ph needs perl, but perl is not installed, it's only
 	# staged, so, use the one in WRKDIR 
-	(cd /usr/include && ${ENV} LD_LIBRARY_PATH=${WRKSRC} \
+	(cd /usr/include && ${SETENV} LD_LIBRARY_PATH=${WRKSRC} \
 		${WRKSRC}/perl -I ${WRKSRC}/lib ${STAGEDIR}${PREFIX}/bin/h2ph \
 		-d ${STAGEDIR}${SITE_ARCH} *.h machine/*.h sys/*.h >/dev/null)
 	@${FIND} ${STAGEDIR}${SITE_ARCH} -name '*.ph' | sed -e 's|${STAGEDIR}||' >> ${TMPPLIST}

@@ -3,7 +3,7 @@
 
 PORTNAME=	perl
 PORTVERSION=	${PERL_VERSION}
-PORTREVISION=	14
+PORTREVISION=	16
 CATEGORIES=	lang devel perl5
 MASTER_SITES=	CPAN \
 		${MASTER_SITE_LOCAL:S/$/:local/} \
@@ -29,7 +29,7 @@ CONFLICTS_INSTALL=	perl5.*-*
 
 OPTIONS_DEFINE=	DEBUG GDBM PERL_MALLOC PERL_64BITINT THREADS PTHREAD \
 		MULTIPLICITY SITECUSTOMIZE USE_PERL
-OPTIONS_DEFAULT=	PERL_64BITINT THREADS PTHREAD USE_PERL
+OPTIONS_DEFAULT=	PERL_64BITINT THREADS PTHREAD USE_PERL MULTIPLICITY
 OPTIONS_SUB=
 GDBM_DESC=	GDBM_File extension
 PERL_MALLOC_DESC=	Use Perl malloc
@@ -175,6 +175,8 @@ CONFIGURE_ARGS+=	-Duse64bitint
 
 .if ${PORT_OPTIONS:MMULTIPLICITY}
 CONFIGURE_ARGS+=	-Dusemultiplicity=y
+.else
+CONFIGURE_ARGS+=	-Dusemultiplicity=n
 .endif
 
 .if ${PORT_OPTIONS:MSITECUSTOMIZE}
@@ -226,7 +228,7 @@ post-install:
 	${MKDIR} ${STAGEDIR}${SITE_ARCH}/sys
 	# h2ph needs perl, but perl is not installed, it's only
 	# staged, so, use the one in WRKDIR 
-	(cd /usr/include && ${ENV} LD_LIBRARY_PATH=${WRKSRC} \
+	(cd /usr/include && ${SETENV} LD_LIBRARY_PATH=${WRKSRC} \
 		${WRKSRC}/perl -I ${WRKSRC}/lib ${STAGEDIR}${PREFIX}/bin/h2ph \
 		-d ${STAGEDIR}${SITE_ARCH} *.h machine/*.h sys/*.h >/dev/null)
 	@${FIND} ${STAGEDIR}${SITE_ARCH} -name '*.ph' | sed -e 's|${STAGEDIR}||' >> ${TMPPLIST}
