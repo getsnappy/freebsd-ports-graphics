@@ -180,7 +180,7 @@ do-install:
 	    ${STAGEDIR}${PREFIX}/share/autostart/
 
 	${MKDIR} ${STAGEDIR}${VIDEODIR}
-	${INSTALL_DATA} ${VBOX_BIN}/vboxvideo_drv_$$(pkgconf --modversion xorg-server | sed -E -e 's/.[0-9]+$//' -e 's/\.//').so \
+	${INSTALL_DATA} ${VBOX_BIN}/vboxvideo_drv_$$(pkgconf --modversion xorg-server | sed -E -e 's/.[0-9]+$$//' -e 's/\.//').so \
 	    ${STAGEDIR}${VIDEODIR}/vboxvideo_drv.so
 .endif
 
