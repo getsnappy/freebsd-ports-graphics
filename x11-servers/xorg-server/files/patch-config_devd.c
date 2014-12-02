@@ -172,7 +172,7 @@ Index: config/devd.c
 +}
 +
 +static void
-+device_added(char *devname)
++device_added(const char *devname)
 +{
 +	char path[PATH_MAX];
 +	char *vendor;
