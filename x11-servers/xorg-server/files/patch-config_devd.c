@@ -1,6 +1,6 @@
 --- config/devd.c.orig	2014-12-02 18:45:43 UTC
 +++ config/devd.c
-@@ -0,0 +1,540 @@
+@@ -0,0 +1,534 @@
 +/*
 + * Copyright (c) 2012 Baptiste Daroussin
 + * Copyright (c) 2013, 2014 Alex Kozlov
@@ -45,7 +45,6 @@
 +#include <fcntl.h>
 +#include <stdlib.h>
 +#include <stdio.h>
-+#include <stdarg.h>
 +#include <stdbool.h>
 +#include <unistd.h>
 +
@@ -142,24 +141,18 @@
 +}
 +
 +static char *
-+sysctl_get_str(const char *format, ...)
++sysctl_get_str(const char *sysctlname)
 +{
-+	va_list args;
-+	char *name = NULL;
 +	char *dest = NULL;
 +	size_t len;
 +
-+	if (format == NULL)
++	if (sysctlname == NULL)
 +		return NULL;
 +
-+	va_start(args, format);
-+	vasprintf(&name, format, args);
-+	va_end(args);
-+
-+	if (sysctlbyname(name, NULL, &len, NULL, 0) == 0) {
++	if (sysctlbyname(sysctlname, NULL, &len, NULL, 0) == 0) {
 +		dest = malloc(len + 1);
 +		if (dest) {
-+			if (sysctlbyname(name, dest, &len, NULL, 0) == 0)
++			if (sysctlbyname(sysctlname, dest, &len, NULL, 0) == 0)
 +				dest[len] = '\0';
 +			else {
 +				free(dest);
@@ -168,7 +161,6 @@
 +		}
 +	}
 +
-+	free(name);
 +	return dest;
 +}
 +
@@ -176,6 +168,7 @@
 +device_added(const char *devname)
 +{
 +	char path[PATH_MAX];
++	char sysctlname[PATH_MAX];
 +	char *vendor;
 +	char *product = NULL;
 +	char *config_info = NULL;
@@ -217,8 +210,9 @@
 +	if (!options)
 +		return;
 +
-+	vendor = sysctl_get_str("dev.%s.%s.%%desc", hw_types[i].driver,
-+				devname + strlen(hw_types[i].driver));
++	snprintf(sysctlname, sizeof(sysctlname), "dev.%s.%s.%%desc",
++	    hw_types[i].driver, devname + strlen(hw_types[i].driver));
++	vendor = sysctl_get_str(sysctlname);
 +	if (vendor == NULL) {
 +		attrs.vendor = strdup("(unnamed)");
 +		attrs.product = strdup("(unnamed)");
