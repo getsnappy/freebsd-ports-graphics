@@ -255,7 +255,7 @@ Index: config/devd.c
 +	}
 +	else {
 +		if (attrs.flags & ~ATTR_KEYBOARD) {
-+			LogMessage(X_ERROR, "config/devd: device %s already opened\n",
++			LogMessage(X_INFO, "config/devd: device %s already opened\n",
 +					 path);
 +
 +			/*
