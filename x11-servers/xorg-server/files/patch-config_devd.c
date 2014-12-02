@@ -1,5 +1,6 @@
-Index: config/devd.c
-@@ -0,0 +1,538 @@
+--- config/devd.c.orig	2014-12-02 18:45:43 UTC
++++ config/devd.c
+@@ -0,0 +1,540 @@
 +/*
 + * Copyright (c) 2012 Baptiste Daroussin
 + * Copyright (c) 2013, 2014 Alex Kozlov
@@ -537,4 +538,6 @@ Index: config/devd.c
 +	disconnect_devd(sock_devd);
 +
 +	RemoveBlockAndWakeupHandlers(block_handler, wakeup_handler, NULL);
++
++	is_console_kbd = false;
 +}
