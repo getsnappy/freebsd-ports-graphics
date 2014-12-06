@@ -171,7 +171,6 @@
     SUBDIR += mdbtools
     SUBDIR += mdcached
     SUBDIR += memcached
-    SUBDIR += memcachedb
     SUBDIR += memcacheq
     SUBDIR += metakit
     SUBDIR += monetdb
@@ -537,8 +536,10 @@
     SUBDIR += pgadmin3
     SUBDIR += pgagent
     SUBDIR += pgbadger
+    SUBDIR += pgbarman
     SUBDIR += pgbouncer
     SUBDIR += pgdbf
+    SUBDIR += pgespresso
     SUBDIR += pgfouine
     SUBDIR += pglesslog
     SUBDIR += pgloader
@@ -833,6 +834,7 @@
     SUBDIR += rubygem-activerecord-mysql-adapter
     SUBDIR += rubygem-amalgalite
     SUBDIR += rubygem-arel
+    SUBDIR += rubygem-arel-helpers
     SUBDIR += rubygem-arel3
     SUBDIR += rubygem-awesome_nested_set
     SUBDIR += rubygem-bdb1
