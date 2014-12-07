@@ -1,6 +1,6 @@
---- config/devd.c.orig	2014-12-02 18:45:43 UTC
+--- config/devd.c.orig	2014-12-07 17:08:09 UTC
 +++ config/devd.c
-@@ -0,0 +1,534 @@
+@@ -0,0 +1,537 @@
 +/*
 + * Copyright (c) 2012 Baptiste Daroussin
 + * Copyright (c) 2013, 2014 Alex Kozlov
@@ -493,6 +493,7 @@
 +	char devicename[1024];
 +	int i, j;
 +
++	LogMessage(X_INFO, "config/devd: probing input devices...\n");
 +
 +	/*
 +	 * Add fake keyboard and give up on keyboards management
@@ -524,6 +525,8 @@
 +void
 +config_devd_fini(void)
 +{
++	LogMessage(X_INFO, "config/devd: terminating backend...\n");
++
 +	if (rtimer) {
 +		TimerFree(rtimer);
 +		rtimer = NULL;
