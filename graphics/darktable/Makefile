@@ -2,7 +2,7 @@
 # $FreeBSD$
 
 PORTNAME=	darktable
-PORTVERSION=	1.5.3
+PORTVERSION=	1.6.0
 CATEGORIES=	graphics
 MASTER_SITES=	https://github.com/darktable-org/${PORTNAME}/releases/download/release-${PORTVERSION}/
 
@@ -39,7 +39,7 @@ RAWSPEED_DESC=	Compile with rawspeed backend
 SLIDESHOW_DESC=	Build OpenGL/SDL slideshow viewer
 
 OPTIONS_DEFAULT=COLORD FB_PICASA FLICKR GEO GPHOTO LUA NLS OPENEXR	\
-		OPENJPEG OPENMP RAWSPEED SLIDESHOW SQUISH WEBP
+		OPENJPEG RAWSPEED SLIDESHOW SQUISH WEBP
 OPTIONS_SUB=	yes
 
 CMAKE_ARGS+=	-DBINARY_PACKAGE_BUILD=1
@@ -99,26 +99,16 @@ WEBP_CMAKE_OFF=		-DUSE_WEBP:BOOL=OFF
 
 .include <bsd.port.pre.mk>
 
-# # -------------------------------------------------------------------
-# # USE_GCC must be late so the compiler feature checks work to detect
-# # that the base C++ standard library switched to libc++:
-# USE_GCC=	yes
+# -------------------------------------------------------------------
+# OpenMP support.
 #
-# .if ${COMPILER_FEATURES:Mlibc++}
-# LDFLAGS+=	-L/usr/local/lib/c++
-# CXXFLAGS+=	-nostdinc++ -isystem /usr/local/include/c++/v1
-# CFLAGS+=	-isystem /usr/local/include/c++/v1
-# BUILD_DEPENDS+=	${LOCALBASE}/lib/c++/libstdc++.so:${PORTSDIR}/devel/libc++
-# .endif
-#
-# .if ${PORT_OPTIONS:MOPENMP}
-# #CMAKE_ARGS+=	-DUSE_OPENMP:BOOL=ON
-# CMAKE_ARGS+=	-DUSE_OPENMP:BOOL=OFF
-# .else
-# CMAKE_ARGS+=	-DUSE_OPENMP:BOOL=OFF
-# .endif
-# # -------------------------------------------------------------------
+# When g++ and libc++ are used together, darktable crashes. This needs
+# some more debugging. Meanwhile, the same technique used on Mac OS X
+# works: using GCC as the C compiler to have OpenMP support, but keep
+# clang++ as the C++ compiler to avoid the G++/libc++ crash.
 
+.if ${COMPILER_FEATURES:Mlibc++} && ${PORT_OPTIONS:MOPENMP}
+# The following code is copied from bsd.gcc.mk.
 V=48
 _GCC_PORT_DEPENDS=gcc${V}
 _GCC_PORT=gcc
@@ -131,13 +121,11 @@ CPP:=			cpp${V}
 _GCC_RUNTIME:=		${LOCALBASE}/lib/gcc${V}
 CFLAGS+=		-Wl,-rpath=${_GCC_RUNTIME}
 LDFLAGS+=		-Wl,-rpath=${_GCC_RUNTIME} -L${_GCC_RUNTIME}
-
-.if ${PORT_OPTIONS:MOPENMP}
-CMAKE_ARGS+=	-DUSE_OPENMP:BOOL=ON
-.else
-CMAKE_ARGS+=	-DUSE_OPENMP:BOOL=OFF
 .endif
-# # -------------------------------------------------------------------
+
+OPENMP_CMAKE_ON=	-DUSE_OPENMP:BOOL=ON
+OPENMP_CMAKE_OFF=	-DUSE_OPENMP:BOOL=OFF
+# -------------------------------------------------------------------
 
 .if defined(WITH_DEBUG)
 CMAKE_BUILD_TYPE=	RelWithDebInfo
