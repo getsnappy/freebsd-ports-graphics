@@ -11,9 +11,9 @@
 # or `x11/nvidia-driver-304' slave ports.
 
 PORTNAME=	nvidia-driver
-DISTVERSION?=	340.46
+DISTVERSION?=	340.65
 # Always try to set PORTREVISION as it can be overridden by the slave ports
-PORTREVISION?=	1
+PORTREVISION?=	0
 CATEGORIES=	x11
 MASTER_SITES=	${MASTER_SITE_NVIDIA}
 # MASTER_SITE_SUBDIR has to be set later because it depends on NVVERSION
@@ -85,9 +85,6 @@ EXTRA_PATCHES+=	${FILESDIR}/legacy-patch-x11-driver-Makefile
 
 # Fix recent arbitrary memory access vulnerability in legacy drivers
 .if ${NVVERSION} <= 190.053
-.  if ${NVVERSION} != 173.01435
-EXTRA_PATCHES+=	${FILESDIR}/security-patch-CVE-2012-0946
-.  endif
 EXTRA_PATCHES+=	${FILESDIR}/security-patch-CVE-2012-4225
 .endif
 
@@ -116,11 +113,6 @@ PLIST_SUB+=	LINUXBASE=${LINUXBASE} SHLIB_VERSION=${PORTVERSION} \
 		MODULESDIR=${MODULESDIR}
 
 .include <bsd.port.options.mk>
-
-# FreeBSD src SVN r254138 had broken 71.86.xx legacy series :(
-.if ${OSVERSION} > 1000041 && ${NVVERSION} <= 71.08615
-BROKEN=		does not compile
-.endif
 
 .if ${PORT_OPTIONS:MLINUX}
 CONFLICTS=	linux[-_]dri-[0-9]* linux-f10-dri-[0-9]*
@@ -230,7 +222,7 @@ post-patch: .SILENT
 .endif
 # Do not build any binaries (native nvidia-settings and nvidia-xconfig are
 # provided by corresponding ports) and manual pages
-.if ${NVVERSION} < 97.046 || ${NVVERSION} >= 195.022
+.if ${NVVERSION} >= 195.022
 	${REINPLACE_CMD} -E 's/(extension).*/\1/' ${WRKSRC}/x11/Makefile
 .else
 	${REINPLACE_CMD} -E 's/(lib).*/\1/' ${WRKSRC}/x11/Makefile
@@ -273,10 +265,7 @@ post-install: .SILENT
 	${INSTALL_SCRIPT} ${WRKSRC}/obj/nvidia-bug-report.sh \
 		${STAGEDIR}${PREFIX}/bin
 # pkg-plist is already overbloated, so use these hacks instead of PLIST_SUB's
-.if ${NVVERSION} < 81.074
-	${REINPLACE_CMD} -e '/libnvidia-cfg/d' ${TMPPLIST}
-.endif
-.if ${NVVERSION} < 97.046 || ${NVVERSION} >= 195.022
+.if ${NVVERSION} >= 195.022
 	${REINPLACE_CMD} -e '/wfb/d' ${TMPPLIST}
 .endif
 .if ${NVVERSION} < 180.029

@@ -7320,3 +7320,5 @@ www/twig-php||2014-12-08|Removed, as it was replaced and conflicting with www/pe
 x11-drivers/xf86-input-egalax||2014-12-10|Removed: Depends on removed xorg-server 1.7
 x11-drivers/xf86-video-newport||2014-12-10|Removed: Depends on removed xorg-server 1.12
 x11-drivers/xf86-video-tga||2014-12-10|Removed: Alpha support was removed in FreeBSD 7.0
+x11/nvidia-driver-71||2014-12-10|Removed: Depends on removed xorg-server 1.12
+x11/nvidia-driver-96||2014-12-10|Removed: Depends on removed xorg-server 1.12
