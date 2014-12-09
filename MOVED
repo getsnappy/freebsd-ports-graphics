@@ -7318,5 +7318,5 @@ editors/texmakerx|editors/texstudio|2014-12-06|The project has been renamed
 databases/postgresql93-plv8js|databases/postgresql-plv8js|2014-12-07|Breaks index when PGSQL_DEFAULT=9.3 and master port can be used for pgsql 9.3
 www/twig-php||2014-12-08|Removed, as it was replaced and conflicting with www/pear-twig and www/pecl-twig
 x11-drivers/xf86-input-egalax||2014-12-10|Removed: Depends on removed xorg-server 1.7
-x11-drivers/xf86-input-newport||2014-12-10|Removed: Depends on removed xorg-server 1.12
-x11-drivers/xf86-input-tga||2014-12-10|Removed: Alpha support was removed in FreeBSD 7.0
+x11-drivers/xf86-video-newport||2014-12-10|Removed: Depends on removed xorg-server 1.12
+x11-drivers/xf86-video-tga||2014-12-10|Removed: Alpha support was removed in FreeBSD 7.0
