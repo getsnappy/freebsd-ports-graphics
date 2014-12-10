@@ -58,7 +58,7 @@ Notes:
 -->
 <vuxml xmlns="http://www.vuxml.org/apps/vuxml-1">
   <vuln vid="27b9b2f0-8081-11e4-b4ca-bcaec565249c">
-    <topic>xserver -- multiple issue with X client requist handling</topic>
+    <topic>xserver -- multiple issue with X client request handling</topic>
     <affects>
       <package>
 	<name>xorg-server</name>
