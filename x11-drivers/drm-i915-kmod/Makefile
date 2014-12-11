@@ -18,6 +18,8 @@ ONLY_FOR_ARCHS=	i386 amd64
 
 KMODNAME=	i915kms_port
 
+PLIST_FILES=	${KMODDIR}/${KMODNAME}.ko
+
 .include <bsd.port.options.mk>
 
 .if (${OSVERSION} < 900000 || ${OSVERSION} > 1000000)
