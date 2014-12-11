@@ -54,9 +54,6 @@ CONFIGURE_ARGS?=--disable-dmx --disable-xvfb --disable-xnest \
 		--enable-record=yes
 INSTALL_TARGET=	install-strip
 
-# We handle Xorg setuid in the plist. This allows to build xorg-server as a user.
-CONFIGURE_ARGS+=--disable-install-setuid
-
 .if ${SLAVE_PORT} == "no"
 SUB_FILES=	pkg-install pkg-deinstall
 .else
@@ -86,6 +83,9 @@ CONFIGURE_ARGS+=	--enable-aiglx=yes
 .else
 CONFIGURE_ARGS+=	--enable-aiglx=no
 .endif
+
+# We handle Xorg setuid in the plist. This allows to build xorg-server as a user.
+CONFIGURE_ARGS+=--disable-install-setuid
 
 .if ${ARCH} == armv6
 EXTRA_PATCHES+=	${FILESDIR}/extra-arm-patch-hw__xfree86__os-support__bsd__Makefile.in
