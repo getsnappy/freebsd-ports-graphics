@@ -23,14 +23,13 @@ XORG_CAT=	xserver
 SLAVE_PORT?=	no
 
 OPTIONS_SUB=	yes
-OPTIONS_DEFINE=	AIGLX SUID
+OPTIONS_DEFINE=	SUID
 OPTIONS_RADIO=	CONF
 OPTIONS_RADIO_CONF= HAL DEVD
-AIGLX_DESC=	Compile with Accelerated Indirect GLX support
 SUID_DESC=	Install the Xorg server with setuid bit set
 HAL_DESC=	Compile with HAL config support
 DEVD_DESC=	Use devd for autoconfiguration of input devices
-OPTIONS_DEFAULT=AIGLX SUID DEVD
+OPTIONS_DEFAULT=SUID DEVD
 
 OPTIONS_EXCLUDE_sparc64=	HAL
 
@@ -76,12 +75,6 @@ LIB_DEPENDS+=	libhal.so:${PORTSDIR}/sysutils/hal
 CONFIGURE_ARGS+=	--enable-config-hal=yes
 .else
 CONFIGURE_ARGS+=	--enable-config-hal=no
-.endif
-
-.if ${PORT_OPTIONS:MAIGLX}
-CONFIGURE_ARGS+=	--enable-aiglx=yes
-.else
-CONFIGURE_ARGS+=	--enable-aiglx=no
 .endif
 
 # We handle Xorg setuid in the plist. This allows to build xorg-server as a user.
