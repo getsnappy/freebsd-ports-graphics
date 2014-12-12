@@ -2,7 +2,7 @@
 # $FreeBSD$
 
 PORTNAME=	drm-i915-kmod
-DISTVERSION=	10.1
+DISTVERSION=	9.275699
 CATEGORIES=	x11-drivers
 MASTER_SITES=	http://people.freebsd.org/~dumbbell/
 DISTNAME=	drm-i915-${DISTVERSION}
