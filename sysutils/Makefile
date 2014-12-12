@@ -79,6 +79,8 @@
     SUBDIR += bkpupsd
     SUBDIR += bksh
     SUBDIR += bontmia
+    SUBDIR += boxbackup
+    SUBDIR += boxbackup-devel
     SUBDIR += brasero
     SUBDIR += brebis
     SUBDIR += bsd-splash-changer
@@ -950,6 +952,7 @@
     SUBDIR += tw_cli
     SUBDIR += tzdialog
     SUBDIR += u-boot-beaglebone
+    SUBDIR += u-boot-rpi
     SUBDIR += u-boot-wandboard
     SUBDIR += ua
     SUBDIR += ucspi-ipc
