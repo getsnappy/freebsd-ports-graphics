@@ -90,10 +90,7 @@ EXTRA_PATCHES+=	${FILESDIR}/extra-arch-i386
 .endif
 
 .if ${ARCH} == ia64
-PLIST_SUB+=	IA64_NA="@comment "
 EXTRA_PATCHES+=	${FILESDIR}/extra-arch-ia64
-.else
-PLIST_SUB+=	IA64_NA=""
 .endif
 
 .if ${ARCH} == powerpc || ${ARCH} == powerpc64
