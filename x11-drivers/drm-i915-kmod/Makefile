@@ -21,7 +21,7 @@ PLIST_FILES=	${KMODDIR}/drm2_port.ko \
 
 .include <bsd.port.options.mk>
 
-.if (${OSVERSION} < 900000 || ${OSVERSION} > 1000000)
+.if (${OSVERSION} < 903000 || ${OSVERSION} > 1000000)
 IGNORE=		This port is only for 9.x systems.
 .endif
 

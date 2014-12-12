@@ -32,9 +32,12 @@ INSTALL_TARGET=	install-strip
 
 .include <bsd.port.options.mk>
 
-.if (${OSVERSION} >= 900000 && ${OSVERSION} < 1000000)
+.if (${OSVERSION} >= 903000 && ${OSVERSION} < 1000000)
 RUN_DEPENDS+=	drm-i915-kmod>=10.1:${PORTSDIR}/x11-drivers/drm-i915-kmod
-EXTRA_PATCHES+=	${FILESDIR}/extra-9.x-kmod
+
+post-patch:
+	@${REINPLACE_CMD} -e 's|"i915kms"|"i915kms_port"|g' \
+		${WRKSRC}/src/intel_device.c
 .endif
 
 .include <bsd.port.mk>
