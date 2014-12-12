@@ -16,9 +16,8 @@ LICENSE=	MIT
 USES=		tar:xz kmod
 ONLY_FOR_ARCHS=	i386 amd64
 
-KMODNAME=	i915kms_port
-
-PLIST_FILES=	${KMODDIR}/${KMODNAME}.ko
+PLIST_FILES=	${KMODDIR}/drm2_port.ko \
+		${KMODDIR}/i915kms_port.ko
 
 .include <bsd.port.options.mk>
 
@@ -31,6 +30,7 @@ MAKE_ARGS+=" HAVE_DEBUG=YES"
 .endif
 
 do-install:
-	${INSTALL_KLD} ${WRKSRC}/${KMODNAME}.ko ${STAGEDIR}${KMODDIR}
+	${INSTALL_KLD} ${WRKSRC}/drm2_port.ko ${STAGEDIR}${KMODDIR}
+	${INSTALL_KLD} ${WRKSRC}/i915kms_port.ko ${STAGEDIR}${KMODDIR}
 
 .include <bsd.port.mk>
