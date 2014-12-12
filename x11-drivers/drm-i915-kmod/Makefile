@@ -29,8 +29,4 @@ IGNORE=		This port is only for 9.x systems.
 MAKE_ARGS+=" HAVE_DEBUG=YES"
 .endif
 
-do-install:
-	${INSTALL_KLD} ${WRKSRC}/drm2_port.ko ${STAGEDIR}${KMODDIR}
-	${INSTALL_KLD} ${WRKSRC}/i915kms_port.ko ${STAGEDIR}${KMODDIR}
-
 .include <bsd.port.mk>
