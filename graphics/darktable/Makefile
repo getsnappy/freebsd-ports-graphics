@@ -96,7 +96,7 @@ SQUISH_CMAKE_OFF=	-DUSE_SQUISH:BOOL=OFF
 WEBP_LIB_DEPENDS=	libwebp.so:${PORTSDIR}/graphics/webp
 WEBP_CMAKE_OFF=		-DUSE_WEBP:BOOL=OFF
 
-.include <bsd.port.pre.mk>
+.include <bsd.port.options.mk>
 
 .if defined(WITH_DEBUG)
 CMAKE_BUILD_TYPE=	RelWithDebInfo
@@ -113,4 +113,4 @@ post-install:
 	${RMDIR} ${STAGEDIR}${DOCSDIR}
 .endif
 
-.include <bsd.port.post.mk>
+.include <bsd.port.mk>
