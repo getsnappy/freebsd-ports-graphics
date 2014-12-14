@@ -225,6 +225,7 @@
     SUBDIR += ilbc
     SUBDIR += imapproxy
     SUBDIR += iodine
+    SUBDIR += ip2location
     SUBDIR += ip6_int
     SUBDIR += ipgrab
     SUBDIR += iplog
@@ -819,6 +820,7 @@
     SUBDIR += pecl-cvsclient
     SUBDIR += pecl-geoip
     SUBDIR += pecl-gupnp
+    SUBDIR += pecl-ip2location
     SUBDIR += pecl-mosquitto
     SUBDIR += pecl-oauth
     SUBDIR += pecl-radius
