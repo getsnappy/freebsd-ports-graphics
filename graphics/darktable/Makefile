@@ -29,8 +29,8 @@ INSTALLS_ICONS=	yes
 LDFLAGS+=	-L${LOCALBASE}/lib -lintl
 
 OPTIONS_DEFINE=	COLORD DOCS FB_PICASA FLICKR GEO GNOMEKEYRING GPHOTO	\
-		GRAPHMAGICK LUA NLS OPENEXR OPENJPEG OPENMP RAWSPEED	\
-		SLIDESHOW SQUISH WEBP
+		GRAPHMAGICK LUA NLS OPENEXR OPENJPEG RAWSPEED SLIDESHOW	\
+		SQUISH WEBP
 
 GEO_DESC=	Support geotagging
 FB_PICASA_DESC=	Support export to Facebook and Picasa
@@ -98,34 +98,6 @@ WEBP_LIB_DEPENDS=	libwebp.so:${PORTSDIR}/graphics/webp
 WEBP_CMAKE_OFF=		-DUSE_WEBP:BOOL=OFF
 
 .include <bsd.port.pre.mk>
-
-# -------------------------------------------------------------------
-# OpenMP support.
-#
-# When g++ and libc++ are used together, darktable crashes. This needs
-# some more debugging. Meanwhile, the same technique used on Mac OS X
-# works: using GCC as the C compiler to have OpenMP support, but keep
-# clang++ as the C++ compiler to avoid the G++/libc++ crash.
-
-.if ${COMPILER_FEATURES:Mlibc++} && ${PORT_OPTIONS:MOPENMP}
-# The following code is copied from bsd.gcc.mk.
-V=48
-_GCC_PORT_DEPENDS=gcc${V}
-_GCC_PORT=gcc
-BUILD_DEPENDS+=	${_GCC_PORT_DEPENDS}:${PORTSDIR}/lang/${_GCC_PORT}
-RUN_DEPENDS+=	${_GCC_PORT_DEPENDS}:${PORTSDIR}/lang/${_GCC_PORT}
-USE_BINUTILS=	yes
-
-CC:=			gcc${V}
-CPP:=			cpp${V}
-_GCC_RUNTIME:=		${LOCALBASE}/lib/gcc${V}
-CFLAGS+=		-Wl,-rpath=${_GCC_RUNTIME}
-LDFLAGS+=		-Wl,-rpath=${_GCC_RUNTIME} -L${_GCC_RUNTIME}
-.endif
-
-OPENMP_CMAKE_ON=	-DUSE_OPENMP:BOOL=ON
-OPENMP_CMAKE_OFF=	-DUSE_OPENMP:BOOL=OFF
-# -------------------------------------------------------------------
 
 .if defined(WITH_DEBUG)
 CMAKE_BUILD_TYPE=	RelWithDebInfo
