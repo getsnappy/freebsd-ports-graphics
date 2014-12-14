@@ -34,6 +34,7 @@ OPTIONS_DEFINE=	COLORD DOCS FB_PICASA FLICKR GEO GNOMEKEYRING GPHOTO	\
 
 GEO_DESC=	Support geotagging
 FB_PICASA_DESC=	Support export to Facebook and Picasa
+LIBSECRET_DESC=	Support libsecret as password backend
 SQUISH_DESC=	Compress thumbnail via libsquish
 RAWSPEED_DESC=	Compile with rawspeed backend
 SLIDESHOW_DESC=	Build OpenGL/SDL slideshow viewer
