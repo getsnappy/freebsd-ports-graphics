@@ -3428,6 +3428,7 @@
     SUBDIR += pecl-spl_types
     SUBDIR += pecl-spread
     SUBDIR += pecl-statgrab
+    SUBDIR += pecl-strict
     SUBDIR += pecl-svn
     SUBDIR += pecl-swoole
     SUBDIR += pecl-sync
@@ -3625,6 +3626,7 @@
     SUBDIR += py-ZopeUndo
     SUBDIR += py-akismet
     SUBDIR += py-anonfunc
+    SUBDIR += py-anyconfig
     SUBDIR += py-anyjson
     SUBDIR += py-apipkg
     SUBDIR += py-appdirs

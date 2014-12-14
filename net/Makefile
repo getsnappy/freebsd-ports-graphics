@@ -225,6 +225,7 @@
     SUBDIR += ilbc
     SUBDIR += imapproxy
     SUBDIR += iodine
+    SUBDIR += ip2location
     SUBDIR += ip6_int
     SUBDIR += ipgrab
     SUBDIR += iplog
@@ -355,6 +356,7 @@
     SUBDIR += mcast-tools
     SUBDIR += mediastreamer
     SUBDIR += mediatomb
+    SUBDIR += megatools
     SUBDIR += mgen
     SUBDIR += micro_inetd
     SUBDIR += micro_proxy
@@ -421,7 +423,6 @@
     SUBDIR += ntopng
     SUBDIR += ntp
     SUBDIR += ntp-devel
-    SUBDIR += ntp-rc
     SUBDIR += ntraceroute
     SUBDIR += nusoap
     SUBDIR += nxproxy
@@ -753,6 +754,7 @@
     SUBDIR += p5-XML-Fast
     SUBDIR += p5-XML-RPC
     SUBDIR += p5-XML-RPC-Fast
+    SUBDIR += p5-XMLRPC-Lite
     SUBDIR += p5-XPC
     SUBDIR += p5-ZConf
     SUBDIR += p5-ZConf-Bookmarks
@@ -818,6 +820,7 @@
     SUBDIR += pecl-cvsclient
     SUBDIR += pecl-geoip
     SUBDIR += pecl-gupnp
+    SUBDIR += pecl-ip2location
     SUBDIR += pecl-mosquitto
     SUBDIR += pecl-oauth
     SUBDIR += pecl-radius
