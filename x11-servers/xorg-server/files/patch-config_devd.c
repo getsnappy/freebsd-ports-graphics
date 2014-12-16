@@ -1,6 +1,6 @@
---- config/devd.c.orig	2014-12-14 13:19:13 UTC
+--- config/devd.c.orig	2014-12-16 23:03:10 UTC
 +++ config/devd.c
-@@ -0,0 +1,536 @@
+@@ -0,0 +1,533 @@
 +/*
 + * Copyright (c) 2012 Baptiste Daroussin
 + * Copyright (c) 2013, 2014 Alex Kozlov
@@ -89,7 +89,7 @@
 +sysctl_exists(const struct hw_type *device, int unit,
 +	char *devname, size_t devname_len)
 +{
-+	char *sysctlname;
++	char sysctlname[PATH_MAX];
 +	size_t len;
 +	int ret;
 +
@@ -97,12 +97,9 @@
 +		return false;
 +
 +	/* Check if a sysctl exists. */
-+	asprintf(&sysctlname, "dev.%s.%i.%%desc", device->driver, unit);
-+	if (sysctlname == NULL)
-+		return false;
-+
++	snprintf(sysctlname, sizeof(sysctlname), "dev.%s.%i.%%desc",
++	    device->driver, unit);
 +	ret = sysctlbyname(sysctlname, NULL, &len, NULL, 0);
-+	free(sysctlname);
 +
 +	if (ret == 0 && len > 0) {
 +		snprintf(devname, devname_len, "%s%i", device->driver, unit);
