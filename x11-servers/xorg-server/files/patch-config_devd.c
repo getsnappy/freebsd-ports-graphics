@@ -229,7 +229,7 @@
 +		else
 +			attrs.product = strdup("(unnamed)");
 +
-+		options = input_option_new(options, "name", xstrdup(attrs.product));
++		options = input_option_new(options, "name", attrs.product);
 +
 +		free(vendor);
 +	}
@@ -242,7 +242,7 @@
 +	fd = open(path, O_RDONLY);
 +	if (fd > 0) {
 +		close(fd);
-+		options = input_option_new(options, "device", xstrdup(path));
++		options = input_option_new(options, "device", path);
 +	}
 +	else {
 +		if (attrs.flags & ~ATTR_KEYBOARD) {
