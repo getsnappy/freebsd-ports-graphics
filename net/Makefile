@@ -28,6 +28,7 @@
     SUBDIR += aslookup
     SUBDIR += asterisk
     SUBDIR += asterisk11
+    SUBDIR += asterisk13
     SUBDIR += avahi
     SUBDIR += avahi-app
     SUBDIR += avahi-autoipd
@@ -37,6 +38,7 @@
     SUBDIR += avahi-libdns
     SUBDIR += avahi-qt4
     SUBDIR += avahi-sharp
+    SUBDIR += axa
     SUBDIR += babeld
     SUBDIR += beacon
     SUBDIR += beanstalkd
@@ -848,6 +850,7 @@
     SUBDIR += phpldapadmin
     SUBDIR += pimdd
     SUBDIR += pipsecd
+    SUBDIR += pjsip
     SUBDIR += pktanon
     SUBDIR += pload
     SUBDIR += plugdaemon
