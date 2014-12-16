@@ -1,6 +1,6 @@
 --- config/devd.c.orig	2014-12-16 23:03:10 UTC
 +++ config/devd.c
-@@ -0,0 +1,533 @@
+@@ -0,0 +1,530 @@
 +/*
 + * Copyright (c) 2012 Baptiste Daroussin
 + * Copyright (c) 2013, 2014 Alex Kozlov
@@ -210,8 +210,6 @@
 +	    hw_types[i].driver, devname + strlen(hw_types[i].driver));
 +	vendor = sysctl_get_str(sysctlname);
 +	if (vendor == NULL) {
-+		attrs.vendor = strdup("(unnamed)");
-+		attrs.product = strdup("(unnamed)");
 +		options = input_option_new(options, "name", devname);
 +	}
 +	else {
@@ -224,12 +222,12 @@
 +		}
 +
 +		attrs.vendor = strdup(vendor);
-+		if (product)
++		if (product) {
 +			attrs.product = strdup(product);
++			options = input_option_new(options, "name", product);
++		}
 +		else
-+			attrs.product = strdup("(unnamed)");
-+
-+		options = input_option_new(options, "name", attrs.product);
++			options = input_option_new(options, "name", "(unnamed)");
 +
 +		free(vendor);
 +	}
@@ -253,7 +251,6 @@
 +			 * Fail if cannot open device, it breaks AllowMouseOpenFail,
 +			 * but it should not matter when config/devd enabled
 +			 */
-+			/* options = input_option_new(options, "device", xstrdup(path)); */
 +			goto unwind;
 +		}
 +
