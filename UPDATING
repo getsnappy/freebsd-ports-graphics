@@ -5,7 +5,7 @@ they are unavoidable.
 You should get into the habit of checking this file for changes each time
 you update your ports collection, before attempting any port upgrades.
 
-201412XX:
+20141218:
   AFFECTS: users of x11/xorg and all xorg ports
   AUTHOR: dumbbell@FreeBSD.org
 
