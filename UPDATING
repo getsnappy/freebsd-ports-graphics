@@ -10,8 +10,9 @@ you update your ports collection, before attempting any port upgrades.
   AUTHOR: dumbbell@FreeBSD.org
 
   The X.Org server (x11-servers/xorg-server) is updated to 1.14. All
-  X.Org drivers and ports such as VirtualBox guest additions or TigerVNC
-  need to be reinstalled or rebuilt.
+  ports which provide X.Org drivers must be updated simultaneously, i.e.
+  x11-drivers/xf86-*, emulators/virtualbox-ose-additions, net/tigervnc,
+  etc.
 
   The input device autodetection backend is switched from HAL to devd.
   If you configure you keyboard layout through HAL .fdi files, you need
