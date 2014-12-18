@@ -53,7 +53,6 @@ VIDEO_DRIVERS=		ati \
 			siliconmotion \
 			sis \
 			tdfx \
-			tga \
 			trident \
 			tseng \
 			vmware \
