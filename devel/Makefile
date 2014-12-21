@@ -1025,6 +1025,7 @@
     SUBDIR += libfreefare
     SUBDIR += libftdi
     SUBDIR += libftdi1
+    SUBDIR += libfwsi
     SUBDIR += libg19
     SUBDIR += libg19draw
     SUBDIR += libgalago
@@ -1189,6 +1190,7 @@
     SUBDIR += libwfut
     SUBDIR += libx86
     SUBDIR += libxalloc
+    SUBDIR += libxo
     SUBDIR += libxs
     SUBDIR += libytnef
     SUBDIR += libzookeeper
@@ -1219,7 +1221,6 @@
     SUBDIR += lion
     SUBDIR += llnextgen
     SUBDIR += llvm-devel
-    SUBDIR += llvm32
     SUBDIR += llvm33
     SUBDIR += llvm34
     SUBDIR += llvm35
@@ -3524,8 +3525,6 @@
     SUBDIR += ppl
     SUBDIR += premake
     SUBDIR += premake4
-    SUBDIR += preps-gui
-    SUBDIR += prepstools
     SUBDIR += privman
     SUBDIR += projectcenter
     SUBDIR += protobuf
@@ -4485,6 +4484,7 @@
     SUBDIR += rubygem-mutter
     SUBDIR += rubygem-naught
     SUBDIR += rubygem-needle
+    SUBDIR += rubygem-nenv
     SUBDIR += rubygem-nesty
     SUBDIR += rubygem-nice-ffi
     SUBDIR += rubygem-nio4r
@@ -4650,6 +4650,7 @@
     SUBDIR += scons
     SUBDIR += sdl12
     SUBDIR += sdl20
+    SUBDIR += sdl2pp
     SUBDIR += sdl_console
     SUBDIR += sdl_gnat
     SUBDIR += sdl_sge
@@ -4691,6 +4692,7 @@
     SUBDIR += sparc64-binutils
     SUBDIR += sparc64-gcc
     SUBDIR += sparc64-xtoolchain-gcc
+    SUBDIR += spark
     SUBDIR += spatialindex
     SUBDIR += spdict
     SUBDIR += spin

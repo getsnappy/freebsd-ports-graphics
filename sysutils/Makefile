@@ -782,6 +782,7 @@
     SUBDIR += respond
     SUBDIR += retail
     SUBDIR += rfstool
+    SUBDIR += rhc
     SUBDIR += rinse
     SUBDIR += rmonitor
     SUBDIR += roottail
@@ -802,6 +803,7 @@
     SUBDIR += rubygem-capistrano
     SUBDIR += rubygem-capistrano-ext
     SUBDIR += rubygem-chef
+    SUBDIR += rubygem-chef-api
     SUBDIR += rubygem-chef-zero
     SUBDIR += rubygem-facter
     SUBDIR += rubygem-fluent-mixin-plaintextformatter
@@ -822,6 +824,7 @@
     SUBDIR += rubygem-hiera
     SUBDIR += rubygem-librarian-puppet
     SUBDIR += rubygem-log4r
+    SUBDIR += rubygem-logify
     SUBDIR += rubygem-mogilefs-client
     SUBDIR += rubygem-murder
     SUBDIR += rubygem-ohai
@@ -912,6 +915,7 @@
     SUBDIR += syslog-ng
     SUBDIR += syslog-ng-devel
     SUBDIR += syslog-ng-incubator
+    SUBDIR += syslog-ng-incubator03
     SUBDIR += syslog-ng33
     SUBDIR += syslog-ng34
     SUBDIR += syslog-ng35
