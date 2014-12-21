@@ -3,7 +3,7 @@
 
 PORTNAME=	darkplaces
 PORTVERSION=	20110628
-PORTREVISION=	3
+PORTREVISION=	4
 CATEGORIES=	games
 MASTER_SITES=	http://offload1.icculus.org:9090/twilight/darkplaces/files/
 DISTNAME=	${PORTNAME}engine${PORTVERSION}
@@ -30,7 +30,6 @@ DEDICATED_DESC=	Build dedicated server
 SDL_DESC=	Build SDL client
 
 PLIST_FILES=	%%DATADIR%%/dummy
-PLIST_DIRS=	%%DATADIR%%
 PORTDOCS=	darkplaces.txt
 
 .include "${.CURDIR}/../quake-data/Makefile.include"

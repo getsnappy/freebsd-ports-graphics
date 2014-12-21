@@ -53,6 +53,7 @@
     SUBDIR += firedns
     SUBDIR += fpdns
     SUBDIR += gdnsd
+    SUBDIR += gdnsd2
     SUBDIR += geta
     SUBDIR += getdns
     SUBDIR += ghtool
@@ -141,7 +142,6 @@
     SUBDIR += pear-Net_DNS
     SUBDIR += pear-Net_DNS2
     SUBDIR += powerdns
-    SUBDIR += powerdns-devel
     SUBDIR += powerdns-recursor
     SUBDIR += py-adns
     SUBDIR += py-bonjour

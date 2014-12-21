@@ -3,7 +3,7 @@
 
 PORTNAME=	widelands
 DISTVERSION=	build18
-PORTREVISION=	4
+PORTREVISION=	5
 CATEGORIES=	games
 MASTER_SITES=	https://launchpadlibrarian.net/167260749/ \
 		http://mirror.amdmi3.ru/distfiles/
@@ -11,6 +11,9 @@ DISTNAME=	${PORTNAME}-${DISTVERSION}-src
 
 MAINTAINER=	amdmi3@FreeBSD.org
 COMMENT=	Realtime strategy game inspired by Settlers II
+
+LICENSE=	GPLv2 # or later
+LICENSE_FILE=	${WRKSRC}/COPYING
 
 LIB_DEPENDS=	libpng.so:${PORTSDIR}/graphics/png \
 		libGLEW.so:${PORTSDIR}/graphics/glew \
@@ -37,7 +40,7 @@ DESKTOP_ENTRIES="Widelands" \
 
 .include <bsd.port.options.mk>
 
-.if ${OSVERSION} < 900000
+.if ${OPSYS} == FreeBSD && ${OSVERSION} < 900000
 IGNORE=		doesn't build on 8.x
 .endif
 

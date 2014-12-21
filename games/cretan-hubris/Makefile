@@ -3,11 +3,11 @@
 
 PORTNAME=	cretan-hubris
 PORTVERSION=	0.2
-PORTREVISION=	3
+PORTREVISION=	4
 CATEGORIES=	games
 MASTER_SITES=	SF/radius-engine/egp/
 
-MAINTAINER=	games@FreeBSD.org
+MAINTAINER=	ports@FreeBSD.org
 COMMENT=	Maze on the Isle of Crete
 
 LICENSE=	GPLv2 CCbyNCSA3
@@ -33,6 +33,5 @@ PLIST_FILES=	bin/${PORTNAME} \
 		share/applications/${PORTNAME}.desktop \
 		share/pixmaps/${PORTNAME}.png \
 		%%DATADIR%%/${PORTNAME}.zip
-PLIST_DIRS=	%%DATADIR%%
 
 .include <bsd.port.mk>

@@ -3,7 +3,7 @@
 
 PORTNAME=	shaaft
 PORTVERSION=	0.5.0
-PORTREVISION=	14
+PORTREVISION=	15
 CATEGORIES=	games
 MASTER_SITES=	SF/criticalmass/OldFiles
 DISTNAME=	Shaaft-${PORTVERSION}
@@ -29,7 +29,6 @@ DATADIR=	${PREFIX}/share/Shaaft
 
 PLIST_FILES=	bin/Packer bin/shaaft %%DATADIR%%/resource.dat \
 		man/man6/shaaft.6.gz
-PLIST_DIRS=	%%DATADIR%%
 
 DESKTOP_ENTRIES="Shaaft" "" "" "${PORTNAME}" "" ""
 

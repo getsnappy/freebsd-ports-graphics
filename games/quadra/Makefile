@@ -3,7 +3,7 @@
 
 PORTNAME=	quadra
 PORTVERSION=	1.3.0
-PORTREVISION=	4
+PORTREVISION=	5
 CATEGORIES=	games
 MASTER_SITES=	http://kbrandt.sdf-eu.org/FreeBSD/distfiles/ \
 		ftp://ftp.bsdforen.de/pub/BSDForen/distfiles/ \
@@ -26,7 +26,6 @@ LDFLAGS+=	-L${LOCALBASE}/lib
 PLIST_FILES=	bin/${PORTNAME} \
 		share/games/${PORTNAME}.res \
 		share/pixmaps/${PORTNAME}.xpm
-PLIST_DIRSTRY=	share/games
 
 DESKTOP_ENTRIES=	"Quadra" "${COMMENT}" \
 			"${PREFIX}/share/pixmaps/${PORTNAME}.xpm" \

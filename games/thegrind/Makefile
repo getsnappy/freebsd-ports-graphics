@@ -3,11 +3,11 @@
 
 PORTNAME=	thegrind
 PORTVERSION=	0.1.2
-PORTREVISION=	2
+PORTREVISION=	3
 CATEGORIES=	games
 MASTER_SITES=	SF/radius-engine/ld21/
 
-MAINTAINER=	games@FreeBSD.org
+MAINTAINER=	ports@FreeBSD.org
 COMMENT=	Simple game about escaping from work
 
 LICENSE=	GPLv2
@@ -28,7 +28,6 @@ PLIST_FILES=	bin/${PORTNAME} \
 		share/applications/${PORTNAME}.desktop \
 		share/pixmaps/${PORTNAME}.png \
 		%%DATADIR%%/${PORTNAME}.zip
-PLIST_DIRS=	%%DATADIR%%
 
 PORTDOCS=	ChangeLog
 OPTIONS_DEFINE=	DOCS

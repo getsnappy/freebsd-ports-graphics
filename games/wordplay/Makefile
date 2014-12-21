@@ -9,7 +9,7 @@ MASTER_SITES=	http://hsvmovies.com/static_subpages/personal_orig/wordplay/
 DISTNAME=	${PORTNAME}${PORTVERSION:S/.//}
 EXTRACT_SUFX=	.tar.Z
 
-MAINTAINER=	games@FreeBSD.org
+MAINTAINER=	ports@FreeBSD.org
 COMMENT=	Simple program to generate anagrams
 
 NO_WRKSUBDIR=	yes
@@ -18,7 +18,6 @@ PORTDOCS=	readme
 OPTIONS_DEFINE=	DOCS
 
 PLIST_FILES=	bin/${PORTNAME} %%DATADIR%%/words721.txt
-PLIST_DIRS=	%%DATADIR%%
 
 post-patch:
 	@${REINPLACE_CMD} -e 's|CC=gcc|CC?=g++|' ${WRKSRC}/makefile

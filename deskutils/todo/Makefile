@@ -7,7 +7,7 @@ CATEGORIES=	deskutils
 MASTER_SITES=	http://cloud.github.com/downloads/ginatrapani/todo.txt-cli/
 DISTNAME=	todo.txt_cli-${PORTVERSION}
 
-MAINTAINER=	clsung@FreeBSD.org
+MAINTAINER=	ports@FreeBSD.org
 COMMENT=	Todo.txt Manager
 
 RUN_DEPENDS=	bash:${PORTSDIR}/shells/bash
@@ -25,7 +25,6 @@ PLIST_FILES=	bin/todo etc/todo.cfg
 SHEBANG_FILES=	todo.sh todo_completion
 
 BASH_PLIST_FILES=	etc/bash_completion.d/todo
-BAHS_PLIST_DIRSTRY=	etc/bash_completion.d
 
 do-install:
 	@${INSTALL_SCRIPT} ${WRKSRC}/todo.sh ${STAGEDIR}${PREFIX}/bin/todo

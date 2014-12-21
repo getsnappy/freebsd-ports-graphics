@@ -3,11 +3,11 @@
 
 PORTNAME=	avoision
 PORTVERSION=	1.1
-PORTREVISION=	5
+PORTREVISION=	6
 CATEGORIES=	games
 MASTER_SITES=	SF/avsn/
 
-MAINTAINER=	games@FreeBSD.org
+MAINTAINER=	ports@FreeBSD.org
 COMMENT=	Simple collect-dots-avoid-blocks game
 
 LICENSE=	GPLv2 CCbyNCSA3
@@ -33,7 +33,6 @@ PLIST_FILES=	bin/${PORTNAME} \
 		share/applications/${PORTNAME}.desktop \
 		share/pixmaps/${PORTNAME}.png \
 		%%DATADIR%%/${PORTNAME}.zip
-PLIST_DIRS=	%%DATADIR%%
 
 PORTDOCS=	ChangeLog
 

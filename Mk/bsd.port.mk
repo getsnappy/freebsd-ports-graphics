@@ -317,8 +317,9 @@ FreeBSD_MAINTAINER=	portmgr@FreeBSD.org
 #
 # WITH_DEBUG_PORTS		- A list of origins for which WITH_DEBUG will be set
 #
-# WITH_SSP_PORTS
-# 				- If set, SSP_FLAGS (defaults to -fstack-protector)
+# WITHOUT_SSP	- Disable SSP.
+#
+# SSP_CFLAGS	- Defaults to -fstack-protector. This value
 #				  is added to CFLAGS and the necessary flags
 #				  are added to LDFLAGS. Note that SSP_UNSAFE
 #				  can be used in Makefiles by port maintainers
@@ -767,19 +768,14 @@ FreeBSD_MAINTAINER=	portmgr@FreeBSD.org
 #
 # For extract:
 #
-# EXTRACT_CMD	- Command for extracting archive: "bzip2" if USE_BZIP2
-#				  is set, "gzip" otherwise.
+# EXTRACT_CMD	- Command for extracting archive
+#				  Default: ${TAR}
 # EXTRACT_BEFORE_ARGS
 #				- Arguments to ${EXTRACT_CMD} before filename.
-#				  Default: "-dc"
+#				  Default: "-xf"
 # EXTRACT_AFTER_ARGS
 #				- Arguments to ${EXTRACT_CMD} following filename.
-#				  default: "| tar -xf -"
-# EXTRACT_PRESERVE_OWNERSHIP
-#				- Normally, when run as "root", the extract stage will
-#				  change the owner and group of all files under ${WRKDIR}
-#				  to 0:0.  Set this variable if you want to turn off this
-#				  feature.
+#				  Default: "--no-same-owner --no-same-permissions"
 # For patch:
 #
 # EXTRA_PATCHES	- Define this variable if you have patches not in
@@ -884,7 +880,6 @@ FreeBSD_MAINTAINER=	portmgr@FreeBSD.org
 #				  Default: ${PORTSDIR}/Templates/BSD.local.dist or
 #				  /etc/mtree/BSD.usr.dist if ${PREFIX} == "/usr".
 # PLIST_DIRS	- Directories to be added to packing list
-# PLIST_DIRSTRY	- Directories to be added to packing list and try to remove them.
 # PLIST_FILES	- Files and symbolic links to be added to packing list
 #
 # PLIST			- Name of the `packing list' file.
@@ -1147,21 +1142,39 @@ STRIPBIN=	${STRIP_CMD}
 
 .else
 
-# Look for ${PATCH_WRKSRC}/.../*.orig files, and (re-)create
-# ${FILEDIR}/patch-* files from them.
+# Look for files named "*.orig" under ${PATCH_WRKSRC} and (re-)generate
+# ${PATCHDIR}/patch-* files from them.  By popular demand, we currently
+# use '_' (underscore) to replace path separators in patch file names.
+#
+# If a file name happens to contain character which is also a separator
+# replacement character, it will be doubled in the resulting patch name.
+#
+# To minimize gratuitous patch renames, newly generated patches will be
+# written under existing file names when they use any of the previously
+# common path separators ([-+_]) or legacy double underscore (__).
 
 .if !target(makepatch)
+PATCH_PATH_SEPARATOR=	_
 makepatch:
-	@${MKDIR} ${FILESDIR}
+	@${MKDIR} ${PATCHDIR}
 	@(cd ${PATCH_WRKSRC}; \
-		for f in `${FIND} . -type f -name '*.orig'`; do \
+		for f in `${FIND} -s . -type f -name '*.orig'`; do \
 			ORIG=$${f#./}; \
 			NEW=$${ORIG%.orig}; \
 			cmp -s $${ORIG} $${NEW} && continue; \
-			PATCH=`${ECHO} $${NEW} | ${SED} -e 's|/|__|g'`; \
-			OUT=${FILESDIR}/patch-$${PATCH}; \
-			${ECHO} ${DIFF} -ud $${ORIG} $${NEW} '>' $${OUT}; \
-			TZ=UTC ${DIFF} -ud $${ORIG} $${NEW} | ${SED} -e \
+			! for _lps in `${ECHO} _ - + | ${SED} -e \
+				's|${PATCH_PATH_SEPARATOR}|__|'`; do \
+					PATCH=`${ECHO} $${NEW} | ${SED} -e "s|/|$${_lps}|g"`; \
+					test -f "${PATCHDIR}/patch-$${PATCH}" && break; \
+			done || ${ECHO} $${_SEEN} | ${GREP} -q /$${PATCH} && { \
+				PATCH=`${ECHO} $${NEW} | ${SED} -e \
+					's|${PATCH_PATH_SEPARATOR}|&&|g' -e \
+					's|/|${PATCH_PATH_SEPARATOR}|g'`; \
+				_SEEN=$${_SEEN}/$${PATCH}; \
+			}; \
+			OUT=${PATCHDIR}/patch-$${PATCH}; \
+			${ECHO} ${DIFF} -udp $${ORIG} $${NEW} '>' $${OUT}; \
+			TZ=UTC ${DIFF} -udp $${ORIG} $${NEW} | ${SED} -e \
 				'/^---/s|\.[0-9]* +0000$$| UTC|' -e \
 				'/^+++/s|\([[:blank:]][-0-9:.+]*\)*$$||' \
 					> $${OUT} || ${TRUE}; \
@@ -1383,7 +1396,7 @@ SCRIPTDIR?=		${MASTERDIR}/scripts
 PKGDIR?=		${MASTERDIR}
 
 .if defined(USE_LINUX_PREFIX)
-PREFIX?=		${LINUXBASE}
+PREFIX:=		${LINUXBASE}
 NO_MTREE=		yes
 .else
 PREFIX?=		${LOCALBASE}
@@ -1618,7 +1631,7 @@ INSTALL_TARGET:=	${INSTALL_TARGET:S/^install-strip$/install/g}
 .endif
 .endif
 
-.if defined(WITH_SSP) || defined(WITH_SSP_PORTS)
+.if !defined(WITHOUT_SSP)
 .include "${PORTSDIR}/Mk/bsd.ssp.mk"
 .endif
 
@@ -1760,9 +1773,8 @@ USE_LINUX=	${OVERRIDE_LINUX_BASE_PORT}
 LINUX_BASE_PORT=	${LINUXBASE}/bin/sh:${PORTSDIR}/emulators/linux_base-${USE_LINUX}
 .	else
 .		if ${USE_LINUX:tl} == "yes"
-USE_LINUX=	f10		# temporary default, set to c6 soon
-LINUX_BASE_PORT=	${LINUXBASE}/etc/fedora-release:${PORTSDIR}/emulators/linux_base-f10
-#LINUX_BASE_PORT=	${LINUXBASE}/etc/redhat-release:${PORTSDIR}/emulators/linux_base-c6
+USE_LINUX=	c6
+LINUX_BASE_PORT=	${LINUXBASE}/etc/redhat-release:${PORTSDIR}/emulators/linux_base-c6
 .		else
 IGNORE=		cannot be built: there is no emulators/linux_base-${USE_LINUX}, perhaps wrong use of USE_LINUX or OVERRIDE_LINUX_BASE_PORT
 .		endif
@@ -1846,7 +1858,6 @@ _FORCE_POST_PATTERNS=	rmdir kldxref mkfontscale mkfontdir fc-cache \
 .endif
 
 .if defined(USE_MYSQL) || defined(WANT_MYSQL_VER) || \
-	defined(USE_PGSQL) || defined(WANT_PGSQL_VER) || \
 	defined(USE_BDB) || defined(USE_SQLITE) || defined(USE_FIREBIRD)
 .include "${PORTSDIR}/Mk/bsd.database.mk"
 .endif
@@ -2074,46 +2085,7 @@ _MAKE_JOBS?=		-j${MAKE_JOBS_NUMBER}
 BUILD_FAIL_MESSAGE+=	Try to set MAKE_JOBS_UNSAFE=yes and rebuild before reporting the failure to the maintainer.
 .endif
 
-# ccache support
-
-# Try to set a default CCACHE_DIR to workaround HOME=/dev/null and
-# HOME=${WRKDIR}/* staging fixes
-.if defined(WITH_CCACHE_BUILD) && !defined(CCACHE_DIR) && \
-    (!defined(HOME) || ${HOME} == /dev/null || ${HOME:S/^${WRKDIR}//} != ${HOME})
-.  if defined(USER) && ${USER} == root
-CCACHE_DIR=	/root/.ccache
-.  else
-NO_CCACHE=	yes
-WARNING+=	WITH_CCACHE_BUILD support disabled, please set CCACHE_DIR.
-.  endif
-.endif
-
-# Support NO_CCACHE for common setups, require WITH_CCACHE_BUILD, and
-# don't use if ccache already set in CC
-.if !defined(NO_CCACHE) && defined(WITH_CCACHE_BUILD) && !${CC:M*ccache*} && \
-  !defined(NO_BUILD) && !defined(NOCCACHE)
-# Avoid depends loops between pkg and ccache
-.	if !${.CURDIR:M*/devel/ccache} && !${.CURDIR:M*/ports-mgmt/pkg}
-BUILD_DEPENDS+=		${LOCALBASE}/bin/ccache:${PORTSDIR}/devel/ccache
-.	endif
-
-_CCACHE_PATH=	${LOCALBASE}/libexec/ccache
-
-# Prepend the ccache dir into the PATH and setup ccache env
-PATH:=	${_CCACHE_PATH}:${PATH}
-#.MAKEFLAGS:		PATH=${PATH}
-.if !${MAKE_ENV:MPATH=*} && !${CONFIGURE_ENV:MPATH=*}
-MAKE_ENV+=			PATH=${PATH}
-CONFIGURE_ENV+=		PATH=${PATH}
-.endif
-
-# Ensure this is always in subchild environments
-.	if defined(CCACHE_DIR)
-#.MAKEFLAGS:		CCACHE_DIR=${CCACHE_DIR}
-MAKE_ENV+=		CCACHE_DIR="${CCACHE_DIR}"
-CONFIGURE_ENV+=	CCACHE_DIR="${CCACHE_DIR}"
-.	endif
-.endif
+.include "${PORTSDIR}/Mk/bsd.ccache.mk"
 
 PTHREAD_CFLAGS?=
 PTHREAD_LIBS?=		-pthread
@@ -2177,11 +2149,7 @@ TAR?=	/usr/bin/tar
 # EXTRACT_SUFX is defined in .pre.mk section
 EXTRACT_CMD?=	${TAR}
 EXTRACT_BEFORE_ARGS?=	-xf
-.if defined(EXTRACT_PRESERVE_OWNERSHIP)
-EXTRACT_AFTER_ARGS?=
-.else
 EXTRACT_AFTER_ARGS?=	--no-same-owner --no-same-permissions
-.endif
 
 # Figure out where the local mtree file is
 .if !defined(MTREE_FILE) && !defined(NO_MTREE)
@@ -3064,12 +3032,6 @@ build: configure
 	@${TOUCH} ${TOUCH_FLAGS} ${BUILD_COOKIE}
 .endif
 
-# Disable install
-.if defined(NO_INSTALL) && !target(do-install)
-do-install:
-	@${DO_NADA}
-.endif
-
 # Disable package
 .if defined(NO_PACKAGE) && !target(package)
 package:
@@ -3341,12 +3303,10 @@ do-extract:
 			exit 1; \
 		fi; \
 	done
-.if !defined(EXTRACT_PRESERVE_OWNERSHIP)
 	@if [ ${UID} = 0 ]; then \
 		${CHMOD} -R ug-s ${WRKDIR}; \
 		${CHOWN} -R 0:0 ${WRKDIR}; \
 	fi
-.endif
 .endif
 
 # Patch
@@ -3435,9 +3395,10 @@ run-autotools-fixup:
 				-e 's|freebsd\[\[12\]\]\*)|freebsd[[12]].*)|g' \
 				-e 's|freebsd\[\[123\]\]\*)|freebsd[[123]].*)|g' \
 					$${f} ; \
+			cmp -s $${f}.fbsd10bak $${f} || \
+			${ECHO_MSG} "===>   FreeBSD 10 autotools fix applied to $${f}"; \
 			${TOUCH} ${TOUCH_FLAGS} -mr $${f}.fbsd10bak $${f} ; \
 			${RM} -f $${f}.fbsd10bak ; \
-			${ECHO_MSG} "===>   FreeBSD 10 autotools fix applied to $${f}"; \
 		done
 .endif
 .endif
@@ -3593,9 +3554,9 @@ check-install-conflicts:
 
 # Install
 
-.if !target(do-install)
+.if !target(do-install) && !defined(NO_INSTALL)
 do-install:
-	@(cd ${INSTALL_WRKSRC} && ${SETENV} ${MAKE_ENV} ${MAKE_CMD} ${MAKE_FLAGS} ${MAKEFILE} ${MAKE_ARGS} ${INSTALL_TARGET})
+	@(cd ${INSTALL_WRKSRC} && ${SETENV} ${MAKE_ENV} ${FAKEROOT} ${MAKE_CMD} ${MAKE_FLAGS} ${MAKEFILE} ${MAKE_ARGS} ${INSTALL_TARGET})
 .endif
 
 # Package
@@ -4885,7 +4846,8 @@ create-manifest:
 		echo "}" ; \
 		echo "categories: [ ${CATEGORIES:u:S/$/,/} ]" ; \
 		l=${LICENSE_COMB} ; \
-		[ -n "${NO_ARCH}" ] && echo "arch : `${PKG_BIN} config abi | ${CUT} -d: -f1,2`:*" ; \
+		[ -n "${NO_ARCH}" ] && echo "arch : `${PKG_BIN} config abi | tr '[:upper:]' '[:lower:]' | ${CUT} -d: -f1,2`:*" ; \
+		[ -n "${NO_ARCH}" ] && echo "abi : `${PKG_BIN} config abi | ${CUT} -d: -f1,2`:*" ; \
 		echo "licenselogic: $${l:-single}" ; \
 		[ -z "${LICENSE}" ] || echo "licenses: [ ${LICENSE:u:S/$/,/} ]" ; \
 		[ -z "${USERS}" ] || echo "users: [ ${USERS:u:S/$/,/} ]" ; \
@@ -5116,6 +5078,7 @@ generate-plist: ${WRKDIR}
 		${SED} ${PLIST_SUB:S/$/!g/:S/^/ -e s!%%/:S/=/%%!/} ${PLIST} >> ${TMPPLIST}; \
 	fi
 
+# Keep PLIST_DIRSTRY as compatibility
 .for dir in ${PLIST_DIRS} ${PLIST_DIRSTRY}
 	@${ECHO_CMD} ${dir} | ${SED} ${PLIST_SUB:S/$/!g/:S/^/ -e s!%%/:S/=/%%!/} -e 's,^,@dir ,' >> ${TMPPLIST}
 .endfor
@@ -5239,6 +5202,24 @@ install-rc-script:
 	done
 .endif
 .endif
+.endif
+
+.if !target(check-man)
+check-man: stage
+	@${ECHO_MSG} "====> Checking man pages (check-man)"
+	@mdirs= ; \
+	for dir in ${MANDIRS:S/^/${STAGEDIR}/} ; do \
+		[ -d $$dir ] && mdirs="$$mdirs $$dir" ;\
+	done ; \
+	err=0 ; \
+	for dir in $$mdirs; do \
+		for f in $$(find $$dir -name "*.gz"); do \
+			${ECHO_CMD} "===> Checking $${f##*/}" ; \
+			gunzip -c $$f | mandoc -Tlint -Werror && continue ; \
+			err=1 ; \
+		done ; \
+	done ; \
+	exit $$err
 .endif
 
 # Compress all manpage not already compressed which are not hardlinks
@@ -5949,9 +5930,9 @@ _PATCH_SEQ=		ask-license patch-message patch-depends pathfix dos2unix fix-sheban
 				pre-patch \
 				pre-patch-script do-patch charsetfix-post-patch post-patch post-patch-script
 _CONFIGURE_DEP=	patch
-_CONFIGURE_SEQ=	build-depends lib-depends configure-message run-autotools-fixup \
+_CONFIGURE_SEQ=	build-depends lib-depends configure-message \
 				pre-configure pre-configure-script \
-				run-autotools do-autoreconf patch-libtool do-configure \
+				run-autotools do-autoreconf patch-libtool run-autotools-fixup do-configure \
 				post-configure post-configure-script
 _BUILD_DEP=		configure
 _BUILD_SEQ=		build-message pre-build pre-build-script do-build \
@@ -5962,25 +5943,25 @@ _STAGE_SEQ=		stage-message stage-dir run-depends lib-depends apply-slist pre-ins
 				pre-su-install
 .if defined(NEED_ROOT)
 _STAGE_SUSEQ=	create-users-groups do-install \
-				kmod-post-install \
+				kmod-post-install fix-perl-things \
 				webplugin-post-install post-install post-install-script \
 				move-uniquefiles patch-lafiles post-stage compress-man \
 				install-rc-script install-ldconfig-file install-license \
 				install-desktop-entries add-plist-info add-plist-docs \
 				add-plist-examples add-plist-data add-plist-post \
-				move-uniquefiles-plist fix-packlist fix-perl-bs
+				move-uniquefiles-plist
 .if defined(DEVELOPER)
 _STAGE_SUSEQ+=	stage-qa
 .endif
 .else
 _STAGE_SEQ+=	create-users-groups do-install \
-				kmod-post-install \
+				kmod-post-install fix-perl-things \
 				webplugin-post-install post-install post-install-script \
 				move-uniquefiles patch-lafiles post-stage compress-man \
 				install-rc-script install-ldconfig-file install-license \
 				install-desktop-entries add-plist-info add-plist-docs \
 				add-plist-examples add-plist-data add-plist-post \
-				move-uniquefiles-plist fix-packlist fix-perl-bs
+				move-uniquefiles-plist fix-perl-things
 .if defined(DEVELOPER)
 _STAGE_SEQ+=	stage-qa
 .endif

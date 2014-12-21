@@ -2,7 +2,7 @@
 # $FreeBSD$
 
 PORTNAME=	toxcore
-PORTVERSION=	0.141012
+PORTVERSION=	0.141116
 PORTREVISION=	1
 CATEGORIES=	net-im net-p2p
 
@@ -21,11 +21,11 @@ USE_GITHUB=	yes
 GH_ACCOUNT=	irungentoo
 GH_PROJECT=	${PORTNAME}
 GH_TAGNAME=	${GH_COMMIT}
-GH_COMMIT=	0444ca1
+GH_COMMIT=	76d14ac
 
 USE_AUTOTOOLS=	libtoolize aclocal autoconf autoheader automake
 AUTOMAKE_ARGS=	-a -c -f
-CONFIGURE_ARGS=	--enable-testing
+CONFIGURE_ARGS=	--enable-tests
 USES=		libtool openal:soft pathfix pkgconfig
 USE_SDL=	yes
 USE_LDCONFIG=	yes

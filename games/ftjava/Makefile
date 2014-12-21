@@ -16,6 +16,7 @@ MAINTAINER=	ports@FreeBSD.org
 COMMENT=	Full Thrust PBEM Client
 
 LICENSE=	BSD2CLAUSE
+LICENSE_FILE=	${WRKSRC}/License.txt
 
 USES=		zip
 USE_JAVA=	yes

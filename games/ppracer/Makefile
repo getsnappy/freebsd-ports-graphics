@@ -3,12 +3,12 @@
 
 PORTNAME=	ppracer
 DISTVERSION=	0.5alpha
-PORTREVISION=	9
+PORTREVISION=	10
 CATEGORIES=	games
 MASTER_SITES=	BERLIOS \
 		SF/${PORTNAME}.berlios/
 
-MAINTAINER=	games@FreeBSD.org
+MAINTAINER=	ports@FreeBSD.org
 COMMENT=	3D downhill racing game... kind of like TuxRacer Improved
 
 LICENSE=	GPLv2

@@ -3,11 +3,11 @@
 
 PORTNAME=	fbg2
 PORTVERSION=	0.4
-PORTREVISION=	3
+PORTREVISION=	4
 CATEGORIES=	games
 MASTER_SITES=	SF/fbg/
 
-MAINTAINER=	games@FreeBSD.org
+MAINTAINER=	ports@FreeBSD.org
 COMMENT=	Classic block-stacking arcade game
 
 LICENSE=	GPLv2 CCbyNCSA3
@@ -33,7 +33,6 @@ PLIST_FILES=	bin/${PORTNAME} \
 		share/applications/${PORTNAME}.desktop \
 		share/pixmaps/${PORTNAME}.png \
 		%%DATADIR%%/${PORTNAME}.zip
-PLIST_DIRS=	%%DATADIR%%
 
 PORTDOCS=	ChangeLog
 OPTIONS_DEFINE=	DOCS

@@ -3,7 +3,7 @@
 
 PORTNAME=	starfighter
 PORTVERSION=	1.2
-PORTREVISION=	3
+PORTREVISION=	4
 CATEGORIES=	games
 MASTER_SITES=	SF/pr-${PORTNAME}/ \
 		SF/nemysisfreebsdp/${CATEGORIES}/:icons
@@ -32,7 +32,6 @@ INSTALLS_ICONS=	yes
 PLIST_FILES=	bin/${PORTNAME} \
 		share/pixmaps/${PORTNAME}.png \
 		%%DATADIR%%/${PORTNAME}.pak
-PLIST_DIRS=	%%DATADIR%%
 
 PORTDOCS=	index.html
 

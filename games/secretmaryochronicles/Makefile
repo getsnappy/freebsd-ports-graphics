@@ -3,7 +3,7 @@
 
 PORTNAME=	secretmaryochronicles
 PORTVERSION=	1.10.git20140514
-PORTREVISION=	2
+PORTREVISION=	3
 CATEGORIES=	games
 MASTER_SITES=	http://mirror.amdmi3.ru/distfiles/
 # it could use github.com/Quintus/SMC, but it needs to be packaged
@@ -14,6 +14,8 @@ MAINTAINER=	amdmi3@FreeBSD.org
 COMMENT=	Secret Maryo Chronicles two-dimensional platform game
 
 BROKEN=		does not run, cegui 0.8 support still in development
+DEPRECATED=	Broken for more than 6 months
+EXPIRATION_DATE=	2014-12-27
 
 LICENSE=	GPLv3
 

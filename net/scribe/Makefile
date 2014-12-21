@@ -3,7 +3,7 @@
 
 PORTNAME=	scribe
 DISTVERSION=	2.2.2013.04.15
-PORTREVISION=	2
+PORTREVISION=	3
 CATEGORIES=	net
 MASTER_SITES=	https://github.com/facebookarchive/scribe/tarball/${GITVERSION}/
 DISTNAME=	facebook-scribe-${GITVERSION}
@@ -31,9 +31,8 @@ CONFIGURE_ARGS=	--with-boost-filesystem=boost_filesystem \
 		--with-boost-system=boost_system \
 		PY_PREFIX="${PREFIX}"
 USE_AUTOTOOLS=	aclocal automake autoconf
-USE_PYTHON=	yes
 USE_RC_SUBR=	${PORTNAME}
-USES=		gmake perl5
+USES=		gmake perl5 python
 
 post-patch:
 	${REINPLACE_CMD} -e 's/^AM_INIT_AUTOMAKE/#/' ${WRKSRC}/configure.ac
@@ -47,4 +46,10 @@ post-install:
 	@${MKDIR} ${STAGEDIR}${EXAMPLESDIR}
 	(cd ${WRKSRC}/examples && ${COPYTREE_SHARE} . ${STAGEDIR}${EXAMPLESDIR})
 
-.include <bsd.port.mk>
+.include <bsd.port.pre.mk>
+
+.if ${OPSYS} == FreeBSD && ${OSVERSION} >= 1000000
+BROKEN=		Does not build on FreeBSD 10.0+
+.endif
+
+.include <bsd.port.post.mk>

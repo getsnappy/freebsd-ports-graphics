@@ -28,7 +28,6 @@
     SUBDIR += packagekit
     SUBDIR += packagekit-qt4
     SUBDIR += pchecker
-    SUBDIR += pib
     SUBDIR += pkg
     SUBDIR += pkg-devel
     SUBDIR += pkg-orphan
@@ -43,6 +42,7 @@
     SUBDIR += pkg_search
     SUBDIR += pkg_trackinst
     SUBDIR += pkg_tree
+    SUBDIR += pkgcompare
     SUBDIR += pkgs_which
     SUBDIR += port-authoring-tools
     SUBDIR += port-maintenance-tools

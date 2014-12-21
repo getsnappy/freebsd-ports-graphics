@@ -12,6 +12,7 @@
     SUBDIR += abck
     SUBDIR += abgx360
     SUBDIR += abgx360gui
+    SUBDIR += accountsservice
     SUBDIR += acpi_call
     SUBDIR += acpica-tools
     SUBDIR += adtool
@@ -49,6 +50,7 @@
     SUBDIR += autopsy
     SUBDIR += b43-fwcutter
     SUBDIR += backuppc
+    SUBDIR += backuppc-devel
     SUBDIR += bacula-bat
     SUBDIR += bacula-client
     SUBDIR += bacula-client-static
@@ -77,6 +79,8 @@
     SUBDIR += bkpupsd
     SUBDIR += bksh
     SUBDIR += bontmia
+    SUBDIR += boxbackup
+    SUBDIR += boxbackup-devel
     SUBDIR += brasero
     SUBDIR += brebis
     SUBDIR += bsd-splash-changer
@@ -115,8 +119,9 @@
     SUBDIR += cfengine34
     SUBDIR += cfengine35
     SUBDIR += cfengine36
-    SUBDIR += cfengine36-rc
     SUBDIR += chgrep
+    SUBDIR += cinnamon-control-center
+    SUBDIR += cinnamon-settings-daemon
     SUBDIR += ciso
     SUBDIR += ciso-maker
     SUBDIR += ck4up
@@ -146,6 +151,7 @@
     SUBDIR += cpdup
     SUBDIR += cpu
     SUBDIR += cpuburn
+    SUBDIR += cpuid
     SUBDIR += cpulimit
     SUBDIR += cramfs
     SUBDIR += crashme
@@ -331,7 +337,6 @@
     SUBDIR += gnome-schedule
     SUBDIR += gnome-settings-daemon
     SUBDIR += gnome-system-monitor
-    SUBDIR += gnome-system-tools
     SUBDIR += gnome_subr
     SUBDIR += goaccess
     SUBDIR += gosa
@@ -470,6 +475,7 @@
     SUBDIR += logrotate
     SUBDIR += logstalgia
     SUBDIR += logstash
+    SUBDIR += logstash-contrib
     SUBDIR += logstash-forwarder
     SUBDIR += logtool
     SUBDIR += logwatch
@@ -561,6 +567,7 @@
     SUBDIR += nvramtool
     SUBDIR += oak
     SUBDIR += obliterate
+    SUBDIR += odo
     SUBDIR += ods2
     SUBDIR += open
     SUBDIR += openipmi
@@ -667,7 +674,6 @@
     SUBDIR += pecl-proctitle
     SUBDIR += pefs-kmod
     SUBDIR += personality
-    SUBDIR += pessulus
     SUBDIR += pflogx
     SUBDIR += pfstat
     SUBDIR += pftables
@@ -760,6 +766,7 @@
     SUBDIR += raincoat
     SUBDIR += rcadm
     SUBDIR += rclean
+    SUBDIR += rcm
     SUBDIR += rdate
     SUBDIR += rdiff-backup
     SUBDIR += rdiff-backup-devel
@@ -770,10 +777,13 @@
     SUBDIR += rej
     SUBDIR += relaxconf
     SUBDIR += rename
+    SUBDIR += renameutils
     SUBDIR += reoback
     SUBDIR += respond
     SUBDIR += retail
     SUBDIR += rfstool
+    SUBDIR += rhc
+    SUBDIR += rinse
     SUBDIR += rmonitor
     SUBDIR += roottail
     SUBDIR += rsnapshot
@@ -793,6 +803,7 @@
     SUBDIR += rubygem-capistrano
     SUBDIR += rubygem-capistrano-ext
     SUBDIR += rubygem-chef
+    SUBDIR += rubygem-chef-api
     SUBDIR += rubygem-chef-zero
     SUBDIR += rubygem-facter
     SUBDIR += rubygem-fluent-mixin-plaintextformatter
@@ -809,11 +820,11 @@
     SUBDIR += rubygem-hammer_cli
     SUBDIR += rubygem-hammer_cli_foreman
     SUBDIR += rubygem-hammer_cli_foreman_bootdisk
+    SUBDIR += rubygem-hammer_cli_foreman_ssh
     SUBDIR += rubygem-hiera
-    SUBDIR += rubygem-hiera-json
-    SUBDIR += rubygem-hiera-puppet
     SUBDIR += rubygem-librarian-puppet
     SUBDIR += rubygem-log4r
+    SUBDIR += rubygem-logify
     SUBDIR += rubygem-mogilefs-client
     SUBDIR += rubygem-murder
     SUBDIR += rubygem-ohai
@@ -851,12 +862,12 @@
     SUBDIR += screenfetch
     SUBDIR += screenie
     SUBDIR += scterc
+    SUBDIR += sd-agent
     SUBDIR += sdd
     SUBDIR += sdparm
     SUBDIR += searchmonkey
     SUBDIR += seatools
     SUBDIR += sec
-    SUBDIR += serpentine
     SUBDIR += setcdboot
     SUBDIR += setquota
     SUBDIR += sformat
@@ -904,6 +915,7 @@
     SUBDIR += syslog-ng
     SUBDIR += syslog-ng-devel
     SUBDIR += syslog-ng-incubator
+    SUBDIR += syslog-ng-incubator03
     SUBDIR += syslog-ng33
     SUBDIR += syslog-ng34
     SUBDIR += syslog-ng35
@@ -936,9 +948,6 @@
     SUBDIR += torsmo
     SUBDIR += toshctl
     SUBDIR += tracker
-    SUBDIR += tracker-client
-    SUBDIR += tracker-gnome
-    SUBDIR += tracker-libtrackergtk
     SUBDIR += tree
     SUBDIR += tren
     SUBDIR += ts
@@ -947,6 +956,9 @@
     SUBDIR += ttyload
     SUBDIR += tw_cli
     SUBDIR += tzdialog
+    SUBDIR += u-boot-beaglebone
+    SUBDIR += u-boot-rpi
+    SUBDIR += u-boot-wandboard
     SUBDIR += ua
     SUBDIR += ucspi-ipc
     SUBDIR += ucspi-proxy
@@ -1055,6 +1067,7 @@
     SUBDIR += xsysstats
     SUBDIR += xvidcap
     SUBDIR += yum
+    SUBDIR += zbackup
     SUBDIR += zeitgeist
     SUBDIR += zeroer
     SUBDIR += zetaback
@@ -1063,6 +1076,7 @@
     SUBDIR += zfs-snapshot-clean
     SUBDIR += zfs-snapshot-mgmt
     SUBDIR += zfs-stats
+    SUBDIR += zfs-stats-lite
     SUBDIR += zfsnap
     SUBDIR += zfstools
     SUBDIR += zidrav

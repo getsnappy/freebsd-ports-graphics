@@ -2,7 +2,7 @@
 # $FreeBSD$
 
 PORTNAME=	stonesoup
-PORTVERSION=	0.15.1
+PORTVERSION=	0.15.2
 CATEGORIES=	games
 MASTER_SITES=	SF/crawl-ref/Stone%20Soup/${PORTVERSION}
 DISTNAME=	stone_soup-${PORTVERSION}-nodeps
@@ -14,8 +14,9 @@ LICENSE=	GPLv2
 LICENSE_FILE=	${WRKDIR}/stone_soup-${PORTVERSION}/licence.txt
 
 USE_SQLITE=	yes
-USES=		bison compiler gmake perl5 pkgconfig tar:xz lua:51
+USES=		bison compiler gmake lua:51 perl5 pkgconfig shebangfix tar:xz
 USE_PERL5=	build
+SHEBANG_FILES=	util/gen-mi-enum
 
 SAVEDIR=	\~/.stonesoup
 WRKSRC=		${WRKDIR}/stone_soup-${PORTVERSION}/source/

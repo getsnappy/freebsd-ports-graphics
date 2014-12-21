@@ -8,7 +8,7 @@ MASTER_SITES=	SF/java-game-lib/Official%20Releases/${PORTNAME:tu}%20${PORTVERSIO
 DISTFILES=	${DISTNAME}${EXTRACT_SUFX} \
 		${PORTNAME}-source-${DISTVERSION}${EXTRACT_SUFX}
 
-MAINTAINER=	games@FreeBSD.org
+MAINTAINER=	ports@FreeBSD.org
 COMMENT=	Lightweight Java Game Library
 
 LICENSE=	BSD3CLAUSE
@@ -37,8 +37,6 @@ PLIST_FILES=	%%JAVAJARDIR%%/${PORTNAME}/${PORTNAME}.jar \
 		%%JAVAJARDIR%%/${PORTNAME}/${PORTNAME}_test.jar \
 		%%JAVAJARDIR%%/${PORTNAME}/${PORTNAME}_util.jar \
 		%%JAVAJARDIR%%/${PORTNAME}/${PORTNAME}_util_applet.jar
-PLIST_DIRS=	%%JAVAJARDIR%%/${PORTNAME} \
-		lib/${PORTNAME}${PORTVERSION}
 
 .include <bsd.port.pre.mk>
 

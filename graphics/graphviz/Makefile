@@ -3,7 +3,7 @@
 
 PORTNAME=	graphviz
 PORTVERSION=	2.38.0
-PORTREVISION=	2
+PORTREVISION=	5
 CATEGORIES=	graphics tk
 MASTER_SITES=	http://www.graphviz.org/pub/graphviz/ARCHIVE/
 
@@ -18,7 +18,7 @@ LIB_DEPENDS=	libltdl.so:${PORTSDIR}/devel/libltdl \
 		libexpat.so:${PORTSDIR}/textproc/expat2 \
 		libgd.so:${PORTSDIR}/${GD_PORT}
 
-USES=		gmake bison libtool:oldver pkgconfig pathfix shebangfix
+USES=		gmake bison libtool:keepla pkgconfig pathfix shebangfix
 GNU_CONFIGURE=	yes
 LDFLAGS+=	-L${LOCALBASE}/lib
 CPPFLAGS+=	-I${LOCALBASE}/include
@@ -88,7 +88,7 @@ PANGOCAIRO_USE=	GNOME=pango XORG=xrender,x11,xau,xdmcp
 LIBRSVG2_USE=	GNOME=librsvg2 GL=gl,glu,glut
 GTK2_USE=	XORG=sm,ice,xext,xinerama,xi,xrandr,xcursor,xfixes GNOME=gtk20
 GNOMEUI_USE=	GNOME=libgnomeui
-SMYRNA_USE=	GNOME=libglade2
+SMYRNA_USE=	GNOME=libglade2 GL=glut
 GVEDIT_USE=	qt4=qmake_build,moc_build,rcc_build,uic_build \
 		qt4=linguist_build,corelib,gui
 GHOSTSCRIPT_USE=GHOSTSCRIPT=yes

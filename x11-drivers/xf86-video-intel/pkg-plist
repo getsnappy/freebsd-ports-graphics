@@ -6,6 +6,3 @@ lib/libIntelXvMC.so
 lib/libIntelXvMC.so.1.0.0
 lib/xorg/modules/drivers/intel_drv.so
 man/man4/intel.4x.gz
-@dirrmtry lib/xorg/modules/drivers
-@dirrmtry lib/xorg/modules
-@dirrmtry lib/xorg

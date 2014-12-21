@@ -1,8 +1,8 @@
 # $FreeBSD$
 
 PORTNAME=	ImageMagick
-DISTVERSION=	6.8.9-8
-PORTREVISION=	3
+DISTVERSION=	6.9.0-0
+PORTREVISION=	1
 PORTEPOCH=	1
 CATEGORIES=	graphics perl5
 MASTER_SITES=	http://www.imagemagick.org/download/ \
@@ -32,10 +32,10 @@ MASTER_SITES=	http://www.imagemagick.org/download/ \
 MAINTAINER=	kwm@FreeBSD.org
 COMMENT=	Image processing tools
 
-#LICENSE=	APACHE20
+LICENSE=	APACHE20
+LICENSE_FILE=	${WRKSRC}/LICENSE
 
-LIB_DEPENDS=	libltdl.so:${PORTSDIR}/devel/libltdl \
-		liblqr-1.so:${PORTSDIR}/graphics/liblqr-1
+LIB_DEPENDS=	libltdl.so:${PORTSDIR}/devel/libltdl
 
 # This port uses .la files, keep libtool:keepla! (magick/module.c)
 USES=		gmake libtool:keepla pathfix perl5 pkgconfig shebangfix tar:xz
@@ -396,10 +396,6 @@ pre-configure:
 .endif
 
 post-install: test
-.if ${PORT_OPTIONS:MPERL}
-	@${RM} -f ${STAGEDIR}${PREFIX}/lib/perl5/${PERL_VER}/${PERL_ARCH}/perllocal.pod*
-	@${RM} -f ${STAGEDIR}${SITE_PERL}/${PERL_ARCH}/auto/Image/Magick/.packlist
-.endif
 .if ${PORT_OPTIONS:MMODULES}
 	@${TOUCH} ${STAGEDIR}${PREFIX}/lib/ImageMagick-${PORTVERSION:R}/modules-${_QBIT}${_HDRI}/coders/.keep
 	@${TOUCH} ${STAGEDIR}${PREFIX}/lib/ImageMagick-${PORTVERSION:R}/modules-${_QBIT}${_HDRI}/filters/.keep

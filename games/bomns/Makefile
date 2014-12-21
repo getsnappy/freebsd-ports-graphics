@@ -3,10 +3,10 @@
 
 PORTNAME=	bomns
 PORTVERSION=	0.99.3
-PORTREVISION=	1
+PORTREVISION=	2
 CATEGORIES=	games
 
-MAINTAINER=	games@FreeBSD.org
+MAINTAINER=	ports@FreeBSD.org
 COMMENT=	Best old-school Deathmatch game ever (only for two players)
 
 LICENSE=	GPLv2
